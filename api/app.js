@@ -181,14 +181,14 @@ app.post('/profile', (req, res) => {
         }
     }, {
         new: true
-    }, (err, data) => {
-        if (err) {
+    }, (err, r) => {
+        if (r) {
             res.send({
-                'status': 'Operation Failed'
+                'status': ''
             })
         } else {
             res.send({
-                'status': ''
+                'status': 'Operation Failed'
             })
         }
     })
@@ -201,11 +201,38 @@ app.get('/profile', (req, res) => {
         username: username
     }, (err, r) => {
         if (r) {
-            res.send(r.data)
-        }
-        else{
+            res.send(r)
+        } else {
             res.send({
-                'status' : 'Operation Failed'
+                'status': 'Operation Failed'
+            })
+        }
+    })
+})
+
+app.post('/addFavorite', (req, res) => {
+    username = req.query.username
+    imageUrl = req.query.url
+    log(imageUrl)
+
+    db.collection('Users').findOneAndUpdate({
+        username: username
+    }, {
+        $set: {
+            favorites: [
+                imageUrl
+            ]
+        }
+    }, {
+        new: true
+    }, (err, r) => {
+        if (r) {
+            res.send({
+                'status': ''
+            })
+        } else {
+            res.send({
+                'status': 'Operation Failed'
             })
         }
     })
