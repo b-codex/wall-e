@@ -45,21 +45,25 @@ app.get('/movies', (req, res) => {
 })
 
 app.get('/getWallpapers', (req, res) => {
-    // res.sendFile(__dirname + '\\Pictures\\startPage\\1.jpg')
-    // res.sendFile(__dirname + '/Pictures/' + req.query.image + '.jpeg')
-    res.json({
-        'files': [
-            'Pictures/startPage/1.jpg',
-            'Pictures/startPage/2.jpg',
-            'Pictures/startPage/3.jpg',
-            'Pictures/startPage/4.jpg',
-            'Pictures/startPage/5.jpg',
-            'Pictures/startPage/6.jpg',
-            'Pictures/startPage/7.jpg',
-            'Pictures/startPage/8.jpg',
-            'Pictures/startPage/9.jpg',
-            'Pictures/startPage/10.jpg',
-        ]
+    var files = [];
+    for (let index = 1; index <= 25; index++) {
+        files.push('Pictures/startPage/' + index + '.jpg')
+        
+    }
+    res.send({
+        'files' : files
+    })
+})
+
+app.get('/category', (req, res) => {
+    category = req.query.category
+    var files = [];
+    for (let index = 1; index <= 25; index++) {
+        files.push('Pictures/' + category + '/' + index + '.jpg')
+        
+    }
+    res.send({
+        'files' : files
     })
 })
 
@@ -97,7 +101,6 @@ app.post('/register', (req, res) => {
         answer2: req.query.answer2,
         answer3: req.query.answer3
     })
-    log(newUser)
     db.collection('Users').findOne({
         username: newUser.username
     }, (err, r) => {
@@ -111,7 +114,6 @@ app.post('/register', (req, res) => {
         } else {
             newUser.save((err, result) => {
                 if (err) log(err.message)
-                // log('user created')
                 res.send({
                     'status': '',
                 })
@@ -213,15 +215,12 @@ app.get('/profile', (req, res) => {
 app.post('/addFavorite', (req, res) => {
     username = req.query.username
     imageUrl = req.query.url
-    log(imageUrl)
 
     db.collection('Users').findOneAndUpdate({
         username: username
     }, {
-        $set: {
-            favorites: [
-                imageUrl
-            ]
+        $addToSet: {
+            favorites: imageUrl
         }
     }, {
         new: true
@@ -233,6 +232,44 @@ app.post('/addFavorite', (req, res) => {
         } else {
             res.send({
                 'status': 'Operation Failed'
+            })
+        }
+    })
+})
+
+app.post('/deleteFavorite', (req, res) => {
+    username = req.query.username
+    imageUrl = req.query.url
+
+    db.collection('Users').findOneAndUpdate({
+        username: username
+    }, {
+        $pull: {
+            favorites: imageUrl
+        }
+    }, {
+        new: true
+    }, (err, r) => {
+        if (r) {
+            res.send({
+                'status': ''
+            })
+        } else {
+            res.send({
+                'status': 'Operation Failed'
+            })
+        }
+    })
+})
+
+app.get('/getFavorite', (req, res) => {
+    username = req.query.username
+    db.collection('Users').findOne({
+        username: username
+    }, (err, r) => {
+        if (r) {
+            res.send({
+                'files': r.favorites
             })
         }
     })

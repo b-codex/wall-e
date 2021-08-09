@@ -16,11 +16,10 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   String _password = "";
   String _confirmPassword = "";
-  String _status = "";
 
   Reset(String password, String confirmPassword) async {
     var response = await Dio().post(
-        'http://192.168.43.189:6969/resetPassword?username=${widget.username}&password=${_password}');
+        'http://10.0.2.2:6969/resetPassword?username=${widget.username}&password=${_password}');
     if (response.data['status'] == '') {
       Navigator.pushReplacement<void, void>(
         context,
@@ -106,6 +105,12 @@ class _ResetPasswordState extends State<ResetPassword> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Wall-e'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 12,
@@ -140,12 +145,20 @@ class _ResetPasswordState extends State<ResetPassword> {
                   SizedBox(height: 10),
                   _buildConfirmPassword(),
                   SizedBox(height: 10),
-                  Text('$_status'),
-                  SizedBox(height: 10),
                   OutlinedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+                        final snackBar = SnackBar(
+                          content: Text(
+                            'Password Changed!',
+                            textAlign: TextAlign.center,
+                          ),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 2),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Future.delayed(Duration(seconds: 4));
                         Reset(_password, _confirmPassword);
                       }
                     },
@@ -154,22 +167,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                   SizedBox(
                     height: 10,
                   ),
-                  ElevatedButton(
-                      onPressed: () {
-                        final snackBar = SnackBar(
-                          content: Text(
-                            'ctfvygbhnjkm',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          backgroundColor: Colors.red,
-                          duration: Duration(seconds: 2),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                      child: Text('Snack'))
                 ],
               ),
             ),

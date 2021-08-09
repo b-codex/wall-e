@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wall_e/sharedPreference.dart';
 
 import 'mainPage.dart';
 
@@ -18,10 +19,11 @@ class FinishRegister extends StatefulWidget {
 
 class _FinishRegisterState extends State<FinishRegister> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _prefs = sharedPreference();
+
   String answer1 = "";
   String answer2 = "";
   String answer3 = "";
-  String _status = "";
 
   Widget _buildQuestion1() {
     return TextFormField(
@@ -89,8 +91,9 @@ class _FinishRegisterState extends State<FinishRegister> {
     answer2.replaceAll(' ', '+');
     answer3.replaceAll(' ', '+');
     var response = await Dio().post(
-        'http://192.168.43.189:6969/register?fullname=${widget.fullname}&username=${widget.username}&password=${widget.password}&answer1=$answer1&answer2=$answer2&answer3=$answer3');
+        'http://10.0.2.2:6969/register?fullname=${widget.fullname}&username=${widget.username}&password=${widget.password}&answer1=$answer1&answer2=$answer2&answer3=$answer3');
     if (response.data['status'] == '') {
+      _prefs.saveUsername('${widget.username}');
       Navigator.pushReplacement<void, void>(
         context,
         MaterialPageRoute(
@@ -98,9 +101,6 @@ class _FinishRegisterState extends State<FinishRegister> {
         ),
       );
     }
-    setState(() {
-      _status = response.data['status'];
-    });
   }
 
   @override
@@ -110,6 +110,8 @@ class _FinishRegisterState extends State<FinishRegister> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        title: Text('Wall-e'),
+        centerTitle: true,
       ),
       body: Container(
         margin: EdgeInsets.symmetric(

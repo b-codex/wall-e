@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:wall_e/pages/login.dart';
 import 'package:wall_e/routes/routes.dart';
+import 'package:wall_e/sharedPreference.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -15,76 +16,34 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  @override
-  void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    trendingFuture = _getWalls();
-    super.initState();
-  }
-
-  Widget _buildSearch() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: Colors.white54),
-            ),
-          ),
-          margin: EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      // controller: search,
-                      decoration: InputDecoration(
-                        hintText: 'search ...',
-                        border: InputBorder.none,
-                      ),
-                      cursorHeight: 24,
-                    ),
-                  ),
-                  Icon(Icons.search),
-                ],
-              ),
-            ],
-          ),
-        ),
-        OutlinedButton(
-          onPressed: null,
-          child: Text('Search'),
-        ),
-      ],
-    );
-  }
-
-  late Future trendingFuture;
-  _getWalls() async {
-    var respoonse = await Dio().get('http://192.168.43.189:6969/getWallpapers');
-    var el = respoonse.data;
-    List trending = [];
-    for (var item in el) {
-      trending.add('http://192.168.43.189:6969/' + item);
-    }
-    return (trending);
-    // setState(() {
-    //   src = 'http://192.168.43.189:6969/' + el;
-    // });
-  }
+  // @override
+  // void initState() {
+  //   SystemChrome.setEnabledSystemUIOverlays([]);
+  //   trendingFuture = _getWalls();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    String? username;
+    var _prefs = sharedPreference();
+    _prefs.getUsername().then((value) => username = value);
+
     SystemChrome.setEnabledSystemUIOverlays([]);
-    // TextEditingController search = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        title: Row(
+          children: [
+            Text('Wall-'),
+            Text(
+              'e',
+              style: TextStyle(color: Colors.blue),
+            )
+          ],
+        ),
+        centerTitle: true,
       ),
       drawer: Drawer(
         child: Column(
@@ -93,13 +52,21 @@ class _MainPageState extends State<MainPage> {
               decoration: BoxDecoration(
                 color: Colors.transparent,
               ),
-              child: Text(
-                'App Name',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-                textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  Image.asset(
+                    'icon/appIcon.png',
+                    width: 100,
+                  ),
+                  Text(
+                    'Wall-e',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
             ListTile(
@@ -113,7 +80,11 @@ class _MainPageState extends State<MainPage> {
             ListTile(
               leading: Icon(Icons.star),
               title: Text('Favorites'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(RouteManager.favorites,
+                    arguments: {'username': username});
+              },
             ),
             Expanded(
               child: Container(),
@@ -124,6 +95,8 @@ class _MainPageState extends State<MainPage> {
                   leading: Icon(Icons.exit_to_app),
                   title: Text('Logout'),
                   onTap: () {
+                    var _prefs = sharedPreference();
+                    _prefs.removeUsername();
                     Navigator.pushReplacement<void, void>(
                       context,
                       MaterialPageRoute(
@@ -138,142 +111,147 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+        physics: ClampingScrollPhysics(),
+        child: Container(
+          child: FutureBuilder(
+            future: Dio().get('http://10.0.2.2:6969/getWallpapers'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
                   children: [
-                    OutlinedButton(
-                      onPressed: _getWalls,
-                      child: Text('abstact'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('animals'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('city'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('entertainment'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('food & drinks'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('holiday'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('nature'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('people'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('sports'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('tech'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text('vehicles'),
-                    ),
-                    SizedBox(
-                      width: 7,
-                    ),
+                    _buildCategories(context),
+                    // SizedBox(height: 5),
+                    _startPageImages(snapshot, context),
                   ],
-                ),
-              ),
-            ),
-            FutureBuilder(
-              future: Dio().get('http://192.168.43.189:6969/getWallpapers'),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var response = jsonDecode(snapshot.data.toString());
-                  // print(response['files'].length);
-                  var items = [];
-                  for (var item in response['files']) {
-                    items.add(
-                      Image.network(
-                        'http://192.168.43.189:6969/' + item,
-                        filterQuality: FilterQuality.low,
-                        height: 300,
-                        width: 300,
-                      ),
-                    );
-                  }
-                  return SizedBox(
-                    height: 1000,
-                    width: 1000,
-                    child: _startPageImages(items),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              },
-            ),
-          ],
+                );
+              } else {
+                return LinearProgressIndicator();
+              }
+            },
+          ),
         ),
       ),
     );
   }
 }
 
-_startPageImages(items) {
-  return ListView.builder(
-    itemCount: items.length,
-    itemBuilder: (BuildContext ctx, int index) {
-      return items[index];
-    },
+Widget _buildCategories(context) {
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Container(
+      margin: EdgeInsets.symmetric(horizontal: 7),
+      child: Row(
+        children: [
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'abstract'});
+            },
+            child: Text('abstact'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'animals'});
+            },
+            child: Text('animals'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'city'});
+            },
+            child: Text('city'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'cars'});
+            },
+            child: Text('cars'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'food'});
+            },
+            child: Text('food'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'nature'});
+            },
+            child: Text('nature'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'sports'});
+            },
+            child: Text('sports'),
+          ),
+          SizedBox(width: 7),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteManager.category,
+                  arguments: {'category': 'phony'});
+            },
+            child: Text('phony'),
+          ),
+        ],
+      ),
+    ),
   );
 }
 
-_generateGridViewCount(children) {
-  return GridView.count(
-    crossAxisCount: 2,
-    children: <Widget>[children],
+Widget _startPageImages(snapshot, context) {
+  snapshot = jsonDecode(snapshot.data.toString());
+  var files = snapshot['files'];
+
+  return Column(
+    children: [
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: GridView.count(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
+          crossAxisCount: 2,
+          childAspectRatio: 0.6,
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+          children: files.map<Widget>(
+            (file) {
+              return GridTile(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(RouteManager.image,
+                        arguments: {'url': 'http://10.0.2.2:6969/' + file});
+                  },
+                  child: Hero(
+                    tag: 'http://10.0.2.2:6969/' + file,
+                    child: Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          'http://10.0.2.2:6969/' + file,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ).toList() as List<Widget>,
+        ),
+      ),
+    ],
   );
 }

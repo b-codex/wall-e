@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wall_e/pages/mainPage.dart';
 import 'package:wall_e/routes/routes.dart';
+import 'package:wall_e/sharedPreference.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,10 +14,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _prefs = sharedPreference();
 
   String _username = "";
   String _password = "";
-  String _status = "";
 
   Widget _buildUsername() {
     return TextFormField(
@@ -67,32 +68,71 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Login(String username, String password) async {
+  _login(String username, String password) async {
     var response = await Dio().get(
-        'http://192.168.43.189:6969/login?username=$username&password=$password');
+        'http://10.0.2.2:6969/login?username=$username&password=$password');
     if (response.data['status'] == '') {
+      _prefs.saveUsername('$username');
       Navigator.pushReplacement<void, void>(
         context,
         MaterialPageRoute(
           builder: (context) => MainPage(),
         ),
       );
+    } else {
+      final snackBar = SnackBar(
+        content: Text(
+          'Login Failed! Check Credentials & Try Again!',
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    setState(() {
-      _status = response.data['status'];
-    });
   }
 
   @override
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIOverlays([]);
-  //   super.initState();
-  // }
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    super.initState();
+
+    final snackBar = SnackBar(
+      content: Text(
+        'Logging In',
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Colors.green,
+      duration: Duration(seconds: 2),
+    );
+    var _prefs = sharedPreference();
+    _prefs.getUsername().then(
+          (value) => {
+            if (value != null)
+              {
+                ScaffoldMessenger.of(context).showSnackBar(snackBar),
+                Navigator.pushReplacement<void, void>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainPage(),
+                  ),
+                )
+              }
+          },
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Wall-e'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 12,
@@ -122,39 +162,21 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    '$_status',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 11,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  SizedBox(height: 50),
                   _buildUsername(),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   _buildPassword(),
-                  SizedBox(
-                    height: 6,
-                  ),
+                  SizedBox(height: 6),
                   OutlinedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        Login(_username, _password);
+                        _login(_username, _password);
                       }
                     },
                     child: Text('Login'),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,21 +185,16 @@ class _LoginPageState extends State<LoginPage> {
                         'Don\'t Have An Account?',
                         style: TextStyle(fontSize: 12, fontFamily: 'Comfortaa'),
                       ),
-                      OutlinedButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(RouteManager.registerPage);
                         },
                         child: Text(
-                          'Register!',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
+                          'Register Now!',
+                          style: TextStyle(fontWeight: FontWeight.w300),
                         ),
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide.none,
-                        ),
-                      ),
+                      )
                     ],
                   ),
                   Row(

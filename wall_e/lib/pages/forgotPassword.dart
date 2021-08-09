@@ -18,12 +18,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   String answer1 = "";
   String answer2 = "";
   String answer3 = "";
-  String _status = "";
 
   forgotPassword(String fullname, String username, String answer1,
       String answer2, String answer3) async {
     var response = await Dio().get(
-        'http://192.168.43.189:6969/forgotPassword?fullname=${fullname}&username=${username}&answer1=$answer1&answer2=$answer2&answer3=$answer3');
+        'http://10.0.2.2:6969/forgotPassword?fullname=${fullname}&username=${username}&answer1=$answer1&answer2=$answer2&answer3=$answer3');
     if (response.data['status'] == '') {
       Navigator.pushReplacement<void, void>(
         context,
@@ -33,10 +32,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
         ),
       );
+    } else {
+      String status = response.data['status'];
+      final snackBar = SnackBar(
+        content: Text(
+          '$status',
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 5),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    setState(() {
-      _status = response.data['status'];
-    });
   }
 
   Widget _buildFullname() {
@@ -150,8 +157,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        title: Text('Wall-e'),
+        centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body: Container(
         margin: EdgeInsets.symmetric(
@@ -192,17 +201,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   _buildQuestion2(),
                   SizedBox(height: 10),
                   _buildQuestion3(),
-                  SizedBox(height: 10),
-                  Text(
-                    '$_status',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 12,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
+                  SizedBox(height: 6),
                   OutlinedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

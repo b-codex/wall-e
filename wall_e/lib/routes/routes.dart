@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wall_e/pages/category.dart';
+import 'package:wall_e/pages/favorites.dart';
 import 'package:wall_e/pages/finishRegister.dart';
 import 'package:wall_e/pages/forgotPassword.dart';
+import 'package:wall_e/pages/image.dart';
+import 'package:wall_e/pages/imageFav.dart';
 import 'package:wall_e/pages/login.dart';
 import 'package:wall_e/pages/mainPage.dart';
 import 'package:wall_e/pages/profile.dart';
@@ -15,6 +19,10 @@ class RouteManager {
   static const String forgotPassword = '/forgotPassword';
   static const String resetPassword = '/resetPassword';
   static const String profile = '/profile';
+  static const String image = '/image';
+  static const String favorites = '/favorites';
+  static const String imageFav = '/imageFav';
+  static const String category = '/category';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     late var values;
@@ -55,6 +63,28 @@ class RouteManager {
       case profile:
         return MaterialPageRoute(
           builder: (context) => Profile(),
+        );
+      case image:
+        return MaterialPageRoute(
+          builder: (context) => ImageAction(
+            url: values['url'],
+          ),
+        );
+      case favorites:
+        return MaterialPageRoute(
+          builder: (context) => Favorites(username: values['username']),
+        );
+      case imageFav:
+        return MaterialPageRoute(
+          builder: (context) => ImageActionFav(
+            url: values['url'],
+          ),
+        );
+      case category:
+        return MaterialPageRoute(
+          builder: (context) => Category(
+            category: values['category'],
+          ),
         );
       default:
         throw FormatException('Route Not Found!');

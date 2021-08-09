@@ -107,6 +107,13 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Wall-e'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 12,
@@ -144,10 +151,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 10,
                   ),
                   _buildUsername(),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Text(
                     'Username Can\'t Be Changed After Registration',
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 10,
+                      color: Colors.white38,
                     ),
                   ),
                   SizedBox(

@@ -25,7 +25,6 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Comfortaa',
       ),
       initialRoute: RouteManager.loginPage,
-      // initialRoute: RouteManager.mainPage,
       onGenerateRoute: RouteManager.generateRoute,
     );
   }
