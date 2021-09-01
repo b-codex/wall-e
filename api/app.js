@@ -1,13 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const fs = require('fs')
-const url = require('url')
-const queryString = require('querystring')
 
 const app = express()
 
 const log = console.log
-var port = process.env.PORT || 6969
+var port = process.env.PORT || 69
 
 app.use(express.static(__dirname))
 app.use(express.json())
@@ -26,9 +24,7 @@ const userSchema = mongoose.Schema({
     fullname: String,
     username: String,
     password: String,
-    answer1: String,
-    answer2: String,
-    answer3: String,
+    secretKey: String
 })
 const User = mongoose.model('User', userSchema, "Users")
 
@@ -48,10 +44,10 @@ app.get('/getWallpapers', (req, res) => {
     var files = [];
     for (let index = 1; index <= 25; index++) {
         files.push('Pictures/startPage/' + index + '.jpg')
-        
+
     }
     res.send({
-        'files' : files
+        'files': files
     })
 })
 
@@ -60,16 +56,17 @@ app.get('/category', (req, res) => {
     var files = [];
     for (let index = 1; index <= 25; index++) {
         files.push('Pictures/' + category + '/' + index + '.jpg')
-        
+
     }
     res.send({
-        'files' : files
+        'files': files
     })
 })
 
 app.get('/login', (req, res) => {
     var username = req.query.username
     var password = req.query.password
+    log("attempting login")
     db.collection('Users').findOne({
         username: username
     }, (err, r) => {
@@ -78,6 +75,7 @@ app.get('/login', (req, res) => {
                 res.json({
                     'status': ''
                 })
+                log('trying')
             } else {
                 res.json({
                     'status': 'Either Username Or Password Is Incorrect. Try Again.'
@@ -97,9 +95,7 @@ app.post('/register', (req, res) => {
         fullname: req.query.fullname,
         username: req.query.username,
         password: req.query.password,
-        answer1: req.query.answer1,
-        answer2: req.query.answer2,
-        answer3: req.query.answer3
+        secretKey: req.query.secretKey,
     })
     db.collection('Users').findOne({
         username: newUser.username
@@ -108,7 +104,7 @@ app.post('/register', (req, res) => {
             if (r.username == newUser.username) {
                 // res.status(200)
                 res.json({
-                    "status": "Username Already Exists. Please Try A Different Username Or Proceed To Login Page."
+                    "status": "Failed"
                 })
             }
         } else {
@@ -122,49 +118,42 @@ app.post('/register', (req, res) => {
     })
 })
 
-app.get('/forgotPassword', (req, res) => {
-    fullname = req.query.fullname
+app.post('/resetPassword', (req, res) => {
     username = req.query.username
-    answer1 = req.query.answer1
-    answer2 = req.query.answer2
-    answer3 = req.query.answer3
+    password = req.query.password
+    secretKey = req.query.secretKey
+
     db.collection('Users').findOne({
         username: username
     }, (err, r) => {
         if (r) {
-            if (r.fullname == fullname && r.username == username && r.answer1 == answer1 && r.answer2 == answer2 && r.answer3 == answer3) {
-                res.send({
-                    'status': ''
+            if (r.username == username && r.secretKey == secretKey) {
+                log("Account Found")
+                db.collection('Users').findOneAndUpdate({
+                    username: username
+                }, {
+                    $set: {
+                        password: password
+                    }
+                }, {
+                    new: true
+                }, (err, data) => {
+                    if (err) {
+                        res.send({
+                            'status': 'Operation Failed'
+                        })
+                    } else {
+                        log("Password Reset")
+                        res.send({
+                            'status': ''
+                        })
+                    }
                 })
             } else {
                 res.send({
                     'status': 'The Information You Entered Is Incorrect! Please Try Again!'
                 })
             }
-        }
-    })
-})
-
-app.post('/resetPassword', (req, res) => {
-    username = req.query.username
-    password = req.query.password
-    db.collection('Users').findOneAndUpdate({
-        username: username
-    }, {
-        $set: {
-            password: password
-        }
-    }, {
-        new: true
-    }, (err, data) => {
-        if (err) {
-            res.send({
-                'status': 'Operation Failed'
-            })
-        } else {
-            res.send({
-                'status': ''
-            })
         }
     })
 })
