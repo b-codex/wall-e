@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wall_e/home_page/screens/home_page_screen.dart';
 import 'package:wall_e/register/blocs/blocs.dart';
 import 'package:wall_e/register/models/register_model.dart';
+import 'package:wall_e/routes/routes.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -79,6 +81,11 @@ class RegisterScreen extends StatelessWidget {
                     listener: (context, state) {
                       if (state is RegisterSuccess) {
                         print('Registration Successful');
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => HomePageScreen(),
+                          ),
+                        );
                       }
 
                       if (state is RegisterFailure) {

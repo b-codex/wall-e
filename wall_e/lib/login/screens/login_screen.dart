@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wall_e/home_page/screens/home_page_screen.dart';
 import 'package:wall_e/login/blocs/blocs.dart';
 import 'package:wall_e/login/models/login_model.dart';
 import 'package:wall_e/routes/routes.dart';
@@ -57,12 +58,12 @@ class LoginScreen extends StatelessWidget {
                   BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
                       if (state is LoggedIn) {
-                        // Navigator.pushReplacement<void, void>(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => LoginScreen(),
-                        //   ),
-                        // );
+                        Navigator.pushReplacement<void, void>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePageScreen(),
+                          ),
+                        );
                         print("Successful Login");
                       }
                       if (state is LoginFailure) {

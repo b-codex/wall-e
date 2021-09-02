@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/forgot_password/blocs/blocs.dart';
 import 'package:wall_e/forgot_password/data_provider/data_provider.dart';
 import 'package:wall_e/forgot_password/repository/fp_repository.dart';
+import 'package:wall_e/home_page/blocs/blocs.dart';
+import 'package:wall_e/home_page/data_provider/data_provider.dart';
+import 'package:wall_e/home_page/repository/home_page_repository.dart';
 import 'package:wall_e/login/blocs/blocs.dart';
 import 'package:wall_e/login/data_provider/data_provider.dart';
 import 'package:wall_e/login/repository/login_repository.dart';
@@ -25,6 +28,9 @@ class WallE extends StatelessWidget {
 
   FP_Repository fp_repository = FP_Repository(fp_provider: FP_Provider());
 
+  HomePageRepository homePageRepository =
+      HomePageRepository(homePageProvider: HomePageProvider());
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -38,6 +44,9 @@ class WallE extends StatelessWidget {
         BlocProvider(
           create: (ctx) => FP_Bloc(fp_repository: fp_repository),
         ),
+        BlocProvider(
+          create: (ctx) => HomePageBloc(homePageRepository: homePageRepository),
+        )
       ],
       child: RepositoryProvider.value(
         value: loginRepository,

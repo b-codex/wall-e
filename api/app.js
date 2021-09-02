@@ -51,6 +51,22 @@ app.get('/getWallpapers', (req, res) => {
     })
 })
 
+app.get('/walls', (req, res) => {
+    var start = req.query.start
+    var end = req.query.end
+    
+    var files = [];
+
+    for (let index = start; index <= end; index++) {
+        files.push('/Pictures/wallpapers/' + index + '.jpg')
+
+    }
+    res.send({
+        'status' : "",
+        'files': files
+    })
+})
+
 app.get('/category', (req, res) => {
     category = req.query.category
     var files = [];
@@ -66,7 +82,6 @@ app.get('/category', (req, res) => {
 app.get('/login', (req, res) => {
     var username = req.query.username
     var password = req.query.password
-    log("attempting login")
     db.collection('Users').findOne({
         username: username
     }, (err, r) => {
@@ -75,7 +90,6 @@ app.get('/login', (req, res) => {
                 res.json({
                     'status': ''
                 })
-                log('trying')
             } else {
                 res.json({
                     'status': 'Either Username Or Password Is Incorrect. Try Again.'
