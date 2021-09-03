@@ -10,7 +10,7 @@ It has 3 business features.
 2. Downloading Images To Gallery
 3. Saving Images As Favorite
 
-This application is built upon flutter for the front-end (UI) by using flutter_bloc for state management and NodeJS for the back-end (API).
+This application is built upon flutter for the front-end (UI) by using [flutter_bloc](https://pub.dev/packages/flutter_bloc) for state management and [NodeJS](https://nodejs.org/en/) for the back-end (API).
 
 This repo contains files for both the API and the flutter application.
 
@@ -20,9 +20,9 @@ To modify this you can go the data_provider files in each feature and modify the
 
 ## Instructions On How To Use The Application
 
-First you have to make sure you have installed the NodeJS environment on your local machine to handle the API.
+First you have to make sure you have installed the [NodeJS](https://nodejs.org/en/) environment on your local machine to handle the API.
 
-After installing NodeJS, navigate to the root folder and open Command Prompt or any terminal and type in the command
+After installing [NodeJS](https://nodejs.org/en/), navigate to the root folder and open Command Prompt or any terminal and type in the command
 
 ```
 npm i
@@ -38,14 +38,27 @@ npm start
 
 ## Sample UIs For The Application
 
-![](UI/login.png)
-![](UI/register.png)
-![](UI/forgot_password.png)
-![](UI/homepage.png)
-![](UI/image_zoom_1.png)
-![](UI/adding_to_favorites.png)
-![](UI/favorites_list.png)
-![](UI/image_zoom_2.png)
+## Login Page
+![](../UI/login.png)
+
+## Register Page
+![](../UI/register.png)
+
+## Password Resetting Page
+![](../UI/forgot_password.png)
+
+## Homepage
+![](../UI/homepage.png)
+
+## Zoomed Image
+![](../UI/image_zoom_1.png)
+![](../UI/image_zoom_2.png)
+
+## Favorite Imaged Added
+![](../UI/adding_to_favorites.png)
+
+## Favorites Page
+![](../UI/favorites_list.png)
 
 
 
