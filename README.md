@@ -54,7 +54,7 @@ npm start
 ![](UI/image_zoom_1.png)
 ![](UI/image_zoom_2.png)
 
-## Favorite Imaged Added
+## Favorite Images Added
 ![](UI/adding_to_favorites.png)
 
 ## Favorites Page
