@@ -39,26 +39,26 @@ npm start
 ## Sample UIs For The Application
 
 ## Login Page
-![](UI/login.png)
+![](UI/login.png | width=350)
 
 ## Register Page
-![](UI/register.png)
+![](UI/register.png | width=350)
 
 ## Password Resetting Page
-![](UI/forgot_password.png)
+![](UI/forgot_password.png | width=350)
 
 ## Homepage
-![](UI/homepage.png)
+![](UI/homepage.png | width=350)
 
 ## Zoomed Image
-![](UI/image_zoom_1.png)
-![](UI/image_zoom_2.png)
+![](UI/image_zoom_1.png | width=350)
+![](UI/image_zoom_2.png | width=350)
 
 ## Favorite Images Added
-![](UI/adding_to_favorites.png)
+![](UI/adding_to_favorites.png | width=350)
 
 ## Favorites Page
-![](UI/favorites_list.png)
+![](UI/favorites_list.png | width=350)
 
 
 
