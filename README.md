@@ -1,4 +1,4 @@
-# wall_e
+# Wall-e
 
 # Getting Started
 
@@ -39,26 +39,26 @@ npm start
 ## Sample UIs For The Application
 
 ## Login Page
-![](../UI/login.png)
+![](UI/login.png)
 
 ## Register Page
-![](../UI/register.png)
+![](UI/register.png)
 
 ## Password Resetting Page
-![](../UI/forgot_password.png)
+![](UI/forgot_password.png)
 
 ## Homepage
-![](../UI/homepage.png)
+![](UI/homepage.png)
 
 ## Zoomed Image
-![](../UI/image_zoom_1.png)
-![](../UI/image_zoom_2.png)
+![](UI/image_zoom_1.png)
+![](UI/image_zoom_2.png)
 
 ## Favorite Imaged Added
-![](../UI/adding_to_favorites.png)
+![](UI/adding_to_favorites.png)
 
 ## Favorites Page
-![](../UI/favorites_list.png)
+![](UI/favorites_list.png)
 
 
 
