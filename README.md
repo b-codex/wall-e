@@ -39,26 +39,34 @@ npm start
 ## Sample UIs For The Application
 
 ## Login Page
-![](UI/login.png | width=350)
+<!-- ![](UI/login.png | width=350) -->
+<img src="UI/login.png" width="350">
 
 ## Register Page
-![](UI/register.png | width=350)
+<!-- ![](UI/register.png | width=350) -->
+<img src="UI/register.png" width="350">
 
 ## Password Resetting Page
-![](UI/forgot_password.png | width=350)
+<!-- ![](UI/forgot_password.png | width=350) -->
+<img src="UI/forgot_password.png" width="350">
 
 ## Homepage
-![](UI/homepage.png | width=350)
+<!-- ![](UI/homepage.png | width=350) -->
+<img src="UI/homepage.png" width="350">
 
 ## Zoomed Image
-![](UI/image_zoom_1.png | width=350)
-![](UI/image_zoom_2.png | width=350)
+<!-- ![](UI/image_zoom_1.png | width=350) -->
+<img src="UI/image_zoom_1.png" width="350">
+<!-- ![](UI/image_zoom_2.png | width=350) -->
+<img src="UI/image_zoom_2.png" width="350">
 
 ## Favorite Images Added
-![](UI/adding_to_favorites.png | width=350)
+<!-- ![](UI/adding_to_favorites.png | width=350) -->
+<img src="UI/adding_to_favorites.png" width="350">
 
 ## Favorites Page
-![](UI/favorites_list.png | width=350)
+<!-- ![](UI/favorites_list.png | width=350) -->
+<img src="UI/favorites_list.png" width="350">
 
 
 
