@@ -29,14 +29,9 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model('User', userSchema, "Users")
 
 app.get("/", function (req, res) {
+    log('home route')
     res.send({
         'status': 200
-    })
-})
-
-app.get('/movies', (req, res) => {
-    fs.readFile(__dirname + '/' + 'movies.json', 'utf8', (err, data) => {
-        res.end(data)
     })
 })
 
@@ -63,18 +58,6 @@ app.get('/walls', (req, res) => {
     }
     res.send({
         'status' : "",
-        'files': files
-    })
-})
-
-app.get('/category', (req, res) => {
-    category = req.query.category
-    var files = [];
-    for (let index = 1; index <= 25; index++) {
-        files.push('Pictures/' + category + '/' + index + '.jpg')
-
-    }
-    res.send({
         'files': files
     })
 })

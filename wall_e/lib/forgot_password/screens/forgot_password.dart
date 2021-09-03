@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/forgot_password/blocs/blocs.dart';
 import 'package:wall_e/forgot_password/models/fp_model.dart';
-import 'package:wall_e/login/screens/login_screen.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -95,7 +94,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                               password: _passwordController.text,
                               secretKey: _secretKeyController.text,
                             );
-                            print(fp_model.username);
                             bloc.add(AttemptReset(fp_model: fp_model));
                           }
                         },
@@ -103,9 +101,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),

@@ -2,6 +2,8 @@ import 'package:wall_e/home_page/models/home_page_models.dart';
 
 abstract class HomePageEvent {}
 
+class LoadingEvent extends HomePageEvent {}
+
 class ImageClickedEvent extends HomePageEvent {
   final imageUrl;
   ImageClickedEvent({required this.imageUrl});

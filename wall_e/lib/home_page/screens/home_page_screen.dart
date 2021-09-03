@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/home_page/blocs/blocs.dart';
+import 'package:wall_e/home_page/models/home_page_models.dart';
 import 'package:wall_e/routes/routes.dart';
 
 class HomePageScreen extends StatelessWidget {
@@ -76,11 +77,23 @@ class HomePageScreen extends StatelessWidget {
       ),
       body: BlocBuilder<HomePageBloc, HomePageState>(
         builder: (context, state) {
+          int nextStart = 1;
+
           print(state);
           final bloc = BlocProvider.of<HomePageBloc>(context);
 
+          if (state is IdleState) {
+            bloc.add(LoadingEvent());
+          }
+
+          if (state is LoadingState) {
+            return LinearProgressIndicator();
+          }
+
           if (state is LoadDone) {
             List files = state.images;
+            nextStart = files.length;
+
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Container(
@@ -90,7 +103,7 @@ class HomePageScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: GridView.count(
                         shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
+                        physics: BouncingScrollPhysics(),
                         crossAxisCount: 2,
                         childAspectRatio: 0.6,
                         mainAxisSpacing: 4.0,
@@ -107,12 +120,12 @@ class HomePageScreen extends StatelessWidget {
                                   //     });
                                 },
                                 child: Hero(
-                                  tag: 'http://10.0.2.2:6969/' + file,
+                                  tag: 'http://10.0.2.2:69/' + file,
                                   child: Container(
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                        'http://10.0.2.2:6969/' + file,
+                                        'http://10.0.2.2:69/' + file,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
@@ -124,6 +137,8 @@ class HomePageScreen extends StatelessWidget {
                         ).toList(),
                       ),
                     ),
+                    
+                    
                   ],
                 ),
               ),
@@ -135,54 +150,4 @@ class HomePageScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _buildImages(List files) {
-  return SingleChildScrollView(
-    physics: BouncingScrollPhysics(),
-    child: Container(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: GridView.count(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              crossAxisCount: 2,
-              childAspectRatio: 0.6,
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-              children: files.map<Widget>(
-                (file) {
-                  return GridTile(
-                    child: GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).pushNamed(
-                        //     RouteManager.image,
-                        //     arguments: {
-                        //       'url': 'http://10.0.2.2:6969/' + file
-                        //     });
-                      },
-                      child: Hero(
-                        tag: 'http://10.0.2.2:6969/' + file,
-                        child: Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              'http://10.0.2.2:6969/' + file,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ).toList(),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

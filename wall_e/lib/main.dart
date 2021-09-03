@@ -56,7 +56,7 @@ class WallE extends StatelessWidget {
             fontFamily: "Comfortaa",
             brightness: Brightness.dark,
           ),
-          initialRoute: RouteManager.loginPage,
+          initialRoute: RouteManager.homePage,
           onGenerateRoute: RouteManager.generateRoute,
         ),
       ),
