@@ -38,14 +38,14 @@ npm start
 
 ## Sample UIs For The Application
 
-![](UI/login.png)
-![](UI/register.png)
-![](UI/forgot_password.png)
-![](UI/homepage.png)
-![](UI/image_zoom_1.png)
-![](UI/adding_to_favorites.png)
-![](UI/favorites_list.png)
-![](UI/image_zoom_2.png)
+![](../UI/login.png)
+![](../UI/register.png)
+![](../UI/forgot_password.png)
+![](../UI/homepage.png)
+![](../UI/image_zoom_1.png)
+![](../UI/adding_to_favorites.png)
+![](../UI/favorites_list.png)
+![](../UI/image_zoom_2.png)
 
 
 

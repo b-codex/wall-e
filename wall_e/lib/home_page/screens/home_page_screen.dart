@@ -77,13 +77,8 @@ class HomePageScreen extends StatelessWidget {
       body: BlocBuilder<HomePageBloc, HomePageState>(
         builder: (context, state) {
           print(state);
-
-          _buildImages([]);
-
-          if (state is LoadProgress) {
-            return LinearProgressIndicator();
-          }
-
+          final bloc = BlocProvider.of<HomePageBloc>(context);
+          bloc.add(Loading());
           if (state is LoadDone) {
             List files = state.images;
             return SingleChildScrollView(
@@ -135,7 +130,7 @@ class HomePageScreen extends StatelessWidget {
             );
           }
           // return _buildImages(files);
-          return Text('data');
+          return LinearProgressIndicator();
         },
       ),
     );

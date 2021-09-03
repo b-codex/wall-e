@@ -8,6 +8,10 @@ class ImageClickedEvent extends HomePageEvent {
   ImageClickedEvent({required this.imageUrl});
 }
 
+class LoadImages extends HomePageEvent {}
+
+class LoadProgress extends HomePageEvent {}
+
 class LoadMoreImages extends HomePageEvent {
   final LoadMoreImagesModel loadMoreImagesModel;
   LoadMoreImages({required this.loadMoreImagesModel});

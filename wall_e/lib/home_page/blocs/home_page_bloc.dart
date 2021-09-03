@@ -5,14 +5,11 @@ import 'package:wall_e/home_page/repository/home_page_repository.dart';
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final HomePageRepository homePageRepository;
 
-  HomePageBloc({required this.homePageRepository})
-      : super(LoadImages(images: ['1','2']));
+  HomePageBloc({required this.homePageRepository}) : super(Loading());
 
   @override
   Stream<HomePageState> mapEventToState(HomePageEvent event) async* {
-    if (event is LoadImages) {
-      // Load Images Here
-      yield LoadProgress();
+    if (state is Loading) {
       print('object');
       await Future.delayed(Duration(seconds: 2));
       final response = await homePageRepository.LoadImages();
@@ -20,7 +17,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
 
     if (event is LoadMoreImages) {
-      yield LoadProgress();
+      yield Loading();
 
       await Future.delayed(Duration(seconds: 3));
       final response =
