@@ -78,7 +78,7 @@ class HomePageScreen extends StatelessWidget {
         builder: (context, state) {
           print(state);
           final bloc = BlocProvider.of<HomePageBloc>(context);
-          bloc.add(Loading());
+
           if (state is LoadDone) {
             List files = state.images;
             return SingleChildScrollView(
