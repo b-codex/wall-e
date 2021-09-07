@@ -46,7 +46,7 @@ class WallE extends StatelessWidget {
         ),
         BlocProvider(
           create: (ctx) => HomePageBloc(homePageRepository: homePageRepository),
-        )
+        ),
       ],
       child: RepositoryProvider.value(
         value: loginRepository,

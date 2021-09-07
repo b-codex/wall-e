@@ -14,4 +14,16 @@ class HomePageRepository {
     final result = await homePageProvider.LoadMoreImages(loadMoreImagesModel);
     return result;
   }
+
+  Future DownloadImage(String imageURL) async {
+    var result = await homePageProvider.DownloadImage(imageURL);
+    print('#########################################');
+    result as Map<dynamic, dynamic>;
+
+    if (result['isSuccess']) {
+      return "Image Downloaded";
+    } else {
+      return "Download Failed";
+    }
+  }
 }

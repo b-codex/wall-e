@@ -13,3 +13,16 @@ class LoadMoreImages extends HomePageEvent {
   final LoadMoreImagesModel loadMoreImagesModel;
   LoadMoreImages({required this.loadMoreImagesModel});
 }
+
+class DownloadImageEvent extends HomePageEvent {
+  final String imageUrl;
+
+  DownloadImageEvent({required this.imageUrl});
+}
+
+class AddImageToFavoriteEvent extends HomePageEvent {
+  final String username;
+  final String imageUrl;
+
+  AddImageToFavoriteEvent({required this.username,required this.imageUrl});
+}

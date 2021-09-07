@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/home_page/blocs/blocs.dart';
 import 'package:wall_e/home_page/repository/home_page_repository.dart';
@@ -21,8 +22,19 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       await Future.delayed(Duration(seconds: 2));
       final response =
           await homePageRepository.LoadMoreImages(event.loadMoreImagesModel);
-      print(response);
+
       yield LoadMoreImagesDone(images: response);
     }
+
+    if (event is DownloadImageEvent) {
+      final response = await homePageRepository.DownloadImage(event.imageUrl);
+      if (response == 'Image Downloaded') {
+        yield DownloadImageDone();
+      } else {
+        yield DownloadImageFailed();
+      }
+    }
+
+    if (event is AddImageToFavoriteEvent) {}
   }
 }

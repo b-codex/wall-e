@@ -13,3 +13,7 @@ class LoadMoreImagesDone extends HomePageState {
 }
 
 class IdleState extends HomePageState {}
+
+class DownloadImageDone extends HomePageState {}
+
+class DownloadImageFailed extends HomePageState {}

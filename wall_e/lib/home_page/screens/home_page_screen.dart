@@ -113,11 +113,12 @@ class HomePageScreen extends StatelessWidget {
                             return GridTile(
                               child: GestureDetector(
                                 onTap: () {
-                                  // Navigator.of(context).pushNamed(
-                                  //     RouteManager.image,
-                                  //     arguments: {
-                                  //       'url': 'http://10.0.2.2:6969/' + file
-                                  //     });
+                                  Navigator.of(context).pushNamed(
+                                    RouteManager.zoomedImage,
+                                    arguments: {
+                                      'imageURL': 'http://10.0.2.2:69/' + file
+                                    },
+                                  );
                                 },
                                 child: Hero(
                                   tag: 'http://10.0.2.2:69/' + file,
@@ -137,8 +138,6 @@ class HomePageScreen extends StatelessWidget {
                         ).toList(),
                       ),
                     ),
-                    
-                    
                   ],
                 ),
               ),

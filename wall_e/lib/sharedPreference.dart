@@ -4,6 +4,7 @@ class sharedPreference {
   Future saveUsername(String username) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setString('username', username);
+    return "Username Saved";
     // print('Username ($username) has been saved to shared preferences');
   }
 
@@ -17,5 +18,6 @@ class sharedPreference {
   Future removeUsername() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.clear();
+    return "Username Removed";
   }
 }
