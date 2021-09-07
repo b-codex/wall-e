@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/forgot_password/blocs/blocs.dart';
 import 'package:wall_e/forgot_password/data_provider/data_provider.dart';
 import 'package:wall_e/forgot_password/repository/fp_repository.dart';
-import 'package:wall_e/home_page/blocs/blocs.dart';
-import 'package:wall_e/home_page/data_provider/data_provider.dart';
-import 'package:wall_e/home_page/repository/home_page_repository.dart';
+import 'package:wall_e/main_features/blocs/blocs.dart';
+import 'package:wall_e/main_features/blocs/favorite_bloc.dart';
+import 'package:wall_e/main_features/data_provider/data_provider.dart';
+import 'package:wall_e/main_features/data_provider/favorite_data_provider.dart';
+import 'package:wall_e/main_features/repository/favorite_repository.dart';
+import 'package:wall_e/main_features/repository/home_page_repository.dart';
 import 'package:wall_e/login/blocs/blocs.dart';
 import 'package:wall_e/login/data_provider/data_provider.dart';
 import 'package:wall_e/login/repository/login_repository.dart';
@@ -31,6 +34,9 @@ class WallE extends StatelessWidget {
   HomePageRepository homePageRepository =
       HomePageRepository(homePageProvider: HomePageProvider());
 
+  FavoriteRepository favoriteRepository = FavoriteRepository(
+    favoriteDataProvider: FavoriteDataProvider(),
+  );
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -47,6 +53,9 @@ class WallE extends StatelessWidget {
         BlocProvider(
           create: (ctx) => HomePageBloc(homePageRepository: homePageRepository),
         ),
+        BlocProvider(
+          create: (ctx) => FavoriteBloc(favoriteRepository: favoriteRepository),
+        ),
       ],
       child: RepositoryProvider.value(
         value: loginRepository,
@@ -56,7 +65,7 @@ class WallE extends StatelessWidget {
             fontFamily: "Comfortaa",
             brightness: Brightness.dark,
           ),
-          initialRoute: RouteManager.homePage,
+          initialRoute: RouteManager.loginPage,
           onGenerateRoute: RouteManager.generateRoute,
         ),
       ),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wall_e/forgot_password/screens/forgot_password.dart';
-import 'package:wall_e/home_page/screens/home_page_screen.dart';
-import 'package:wall_e/home_page/screens/zoomed_image_screen.dart';
+import 'package:wall_e/main_features/screens/home_page_screen.dart';
+import 'package:wall_e/main_features/screens/zoomed_image_screen.dart';
 import 'package:wall_e/login/screens/login_screen.dart';
 import 'package:wall_e/profile/screens/profile_screen.dart';
 import 'package:wall_e/register/screens/register_screen.dart';
-
 
 class RouteManager {
   static const String loginPage = '/';
@@ -39,12 +38,14 @@ class RouteManager {
         );
       case zoomedImage:
         return MaterialPageRoute(
-          builder: (context) => ZoomedImageScreen(imageURL: values['imageURL'],),
+          builder: (context) => ZoomedImageScreen(
+            imageURL: values['imageURL'],
+          ),
         );
       case profilePage:
         return MaterialPageRoute(
           builder: (context) => ProfileScreen(),
-        ); 
+        );
       default:
         throw FormatException('Route Not Found!');
     }

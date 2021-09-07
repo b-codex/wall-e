@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wall_e/home_page/screens/home_page_screen.dart';
+import 'package:wall_e/main_features/screens/home_page_screen.dart';
 import 'package:wall_e/register/blocs/blocs.dart';
 import 'package:wall_e/register/models/register_model.dart';
 import 'package:wall_e/routes/routes.dart';

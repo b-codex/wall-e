@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wall_e/home_page/screens/home_page_screen.dart';
+import 'package:wall_e/main_features/screens/home_page_screen.dart';
 import 'package:wall_e/login/blocs/blocs.dart';
 import 'package:wall_e/login/models/login_model.dart';
 import 'package:wall_e/routes/routes.dart';
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                       }
 
                       return OutlinedButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             final loginBloc =
