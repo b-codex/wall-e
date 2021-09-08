@@ -11,7 +11,6 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   @override
   Stream<FavoriteState> mapEventToState(FavoriteEvent event) async* {
     if (event is AddToFavoritesEvent) {
-      print(event.username + '        ' + event.imageURL);
       final response = await favoriteRepository.AddImageToFavorites(
           event.username, event.imageURL);
       if (response == 'Success') {

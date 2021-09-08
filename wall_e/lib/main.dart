@@ -15,6 +15,9 @@ import 'package:wall_e/auth/login/repository/login_repository.dart';
 import 'package:wall_e/auth/register/blocs/register_bloc.dart';
 import 'package:wall_e/auth/register/data_provider/data_provider.dart';
 import 'package:wall_e/auth/register/repository/register_repository.dart';
+import 'package:wall_e/profile/blocs/blocs.dart';
+import 'package:wall_e/profile/data_provider/data_provider.dart';
+import 'package:wall_e/profile/repository/profile_repository.dart';
 import 'package:wall_e/routes/routes.dart';
 
 void main() => runApp(WallE());
@@ -23,20 +26,30 @@ void main() => runApp(WallE());
 class WallE extends StatelessWidget {
   // This widget is the root of your application.
 
-  LoginRepository loginRepository =
-      LoginRepository(loginProvider: LoginProvider());
+  LoginRepository loginRepository = LoginRepository(
+    loginProvider: LoginProvider(),
+  );
 
-  RegisterRepository registerRepository =
-      RegisterRepository(registerProvider: RegisterProvider());
+  RegisterRepository registerRepository = RegisterRepository(
+    registerProvider: RegisterProvider(),
+  );
 
-  FP_Repository fp_repository = FP_Repository(fp_provider: FP_Provider());
+  FP_Repository fp_repository = FP_Repository(
+    fp_provider: FP_Provider(),
+  );
 
-  HomePageRepository homePageRepository =
-      HomePageRepository(homePageProvider: HomePageProvider());
+  HomePageRepository homePageRepository = HomePageRepository(
+    homePageProvider: HomePageProvider(),
+  );
 
   FavoriteRepository favoriteRepository = FavoriteRepository(
     favoriteDataProvider: FavoriteDataProvider(),
   );
+
+  ProfileRepository profileRepository = ProfileRepository(
+    profileDataProvider: ProfileDataProvider(),
+  );
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -56,6 +69,9 @@ class WallE extends StatelessWidget {
         BlocProvider(
           create: (ctx) => FavoriteBloc(favoriteRepository: favoriteRepository),
         ),
+        BlocProvider(
+          create: (ctx) => ProfileBloc(profileRepository: profileRepository),
+        ),
       ],
       child: RepositoryProvider.value(
         value: loginRepository,
@@ -65,7 +81,7 @@ class WallE extends StatelessWidget {
             fontFamily: "Comfortaa",
             brightness: Brightness.dark,
           ),
-          initialRoute: RouteManager.homePage,
+          initialRoute: RouteManager.loginPage,
           onGenerateRoute: RouteManager.generateRoute,
         ),
       ),

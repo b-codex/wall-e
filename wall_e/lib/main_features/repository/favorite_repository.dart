@@ -5,11 +5,9 @@ class FavoriteRepository {
   FavoriteRepository({required this.favoriteDataProvider});
 
   Future<String> AddImageToFavorites(String username, String imageURL) async {
-    print('my repo');
     var result =
         await favoriteDataProvider.AddImageToFavorites(username, imageURL);
 
-    print(result);
     if (result == "Added To Favorites") {
       return "Success";
     } else {

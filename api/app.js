@@ -49,7 +49,7 @@ app.get('/getWallpapers', (req, res) => {
 app.get('/walls', (req, res) => {
     var start = req.query.start
     var end = req.query.end
-    
+
     var files = [];
 
     for (let index = start; index <= end; index++) {
@@ -57,7 +57,7 @@ app.get('/walls', (req, res) => {
 
     }
     res.send({
-        'status' : "",
+        'status': "",
         'files': files
     })
 })
@@ -256,6 +256,23 @@ app.get('/getFavorite', (req, res) => {
         if (r) {
             res.send({
                 'files': r.favorites
+            })
+        }
+    })
+})
+
+app.delete('/deleteAccount', (req, res) => {
+    username = req.query.username
+    db.collection('Users').findOneAndDelete({
+        username: username
+    }, (err, r) => {
+        if (r.value != null) {
+            res.send({
+                'status': ''
+            })
+        } else {
+            res.send({
+                'status': 'Account Deletion Failed'
             })
         }
     })

@@ -35,10 +35,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
       if (response == 'Success') {
         yield DownloadImageDone();
+        yield IdleState();
       }
       if (response == 'Failure') {
-        print('failed');
         yield DownloadImageFailed();
+        yield IdleState();
       }
     }
   }

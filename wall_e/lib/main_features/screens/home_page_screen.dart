@@ -26,7 +26,7 @@ class HomePageScreen extends StatelessWidget {
                     minRadius: 50,
                     backgroundColor: Colors.transparent,
                     child: Image.asset(
-                      'icon/appIcon.ico',
+                      'assets/images/appIcon.png',
                       width: 100,
                     ),
                   ),
@@ -46,7 +46,7 @@ class HomePageScreen extends StatelessWidget {
               title: Text('Profile'),
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed(RouteManager.loginPage);
+                Navigator.of(context).pushNamed(RouteManager.profilePage);
               },
             ),
             ListTile(
