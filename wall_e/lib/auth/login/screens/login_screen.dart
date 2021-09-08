@@ -4,6 +4,7 @@ import 'package:wall_e/main_features/screens/home_page_screen.dart';
 import 'package:wall_e/auth/login/blocs/blocs.dart';
 import 'package:wall_e/auth/login/models/login_model.dart';
 import 'package:wall_e/routes/routes.dart';
+import 'package:wall_e/sharedPreference.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = "/login";
@@ -16,7 +17,13 @@ class LoginScreen extends StatelessWidget {
 
     final _usernameController = TextEditingController();
     final _passwordController = TextEditingController();
-
+    final _prefs = sharedPreference();
+    _prefs.getUsername().then(
+      (value) {
+        print('logged in user is ==> $value');
+        
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

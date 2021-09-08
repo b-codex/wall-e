@@ -19,3 +19,7 @@ class DownloadImageEvent extends HomePageEvent {
 
   DownloadImageEvent({required this.imageUrl});
 }
+
+class LogoutUser extends HomePageEvent {
+  LogoutUser();
+}

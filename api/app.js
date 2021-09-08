@@ -223,7 +223,7 @@ app.post('/addFavorite', (req, res) => {
     })
 })
 
-app.post('/deleteFavorite', (req, res) => {
+app.put('/deleteFavorite', (req, res) => {
     username = req.query.username
     imageUrl = req.query.url
 
@@ -255,6 +255,7 @@ app.get('/getFavorite', (req, res) => {
     }, (err, r) => {
         if (r) {
             res.send({
+                'status' : '',
                 'files': r.favorites
             })
         }

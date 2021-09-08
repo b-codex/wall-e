@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/main_features/blocs/blocs.dart';
 import 'package:wall_e/main_features/repository/home_page_repository.dart';
+import 'package:wall_e/sharedPreference.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   final HomePageRepository homePageRepository;
@@ -41,6 +42,16 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         yield DownloadImageFailed();
         yield IdleState();
       }
+    }
+
+    if (event is LogoutUser) {
+      final _prefs = sharedPreference();
+      _prefs.getUsername().then(
+        (value) {
+          print('logged in user is ==> $value');
+          _prefs.removeUsername();
+        },
+      );
     }
   }
 }

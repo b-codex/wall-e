@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/auth/forgot_password/blocs/blocs.dart';
 import 'package:wall_e/auth/forgot_password/data_provider/data_provider.dart';
 import 'package:wall_e/auth/forgot_password/repository/fp_repository.dart';
+import 'package:wall_e/favorite/blocs/blocs.dart';
+import 'package:wall_e/favorite/data_provider/data_provider.dart';
+import 'package:wall_e/favorite/repository/fav_repository.dart';
 import 'package:wall_e/main_features/blocs/blocs.dart';
 import 'package:wall_e/main_features/blocs/favorite_bloc.dart';
 import 'package:wall_e/main_features/data_provider/data_provider.dart';
@@ -50,27 +53,48 @@ class WallE extends StatelessWidget {
     profileDataProvider: ProfileDataProvider(),
   );
 
+  FavRepository favRepository = FavRepository(
+    favDataProvider: FavDataProvider(),
+  );
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (ctx) => LoginBloc(loginRepository: loginRepository),
+          create: (ctx) => LoginBloc(
+            loginRepository: loginRepository,
+          ),
         ),
         BlocProvider(
-          create: (ctx) => RegisterBloc(registerRepository: registerRepository),
+          create: (ctx) => RegisterBloc(
+            registerRepository: registerRepository,
+          ),
         ),
         BlocProvider(
-          create: (ctx) => FP_Bloc(fp_repository: fp_repository),
+          create: (ctx) => FP_Bloc(
+            fp_repository: fp_repository,
+          ),
         ),
         BlocProvider(
-          create: (ctx) => HomePageBloc(homePageRepository: homePageRepository),
+          create: (ctx) => HomePageBloc(
+            homePageRepository: homePageRepository,
+          ),
         ),
         BlocProvider(
-          create: (ctx) => FavoriteBloc(favoriteRepository: favoriteRepository),
+          create: (ctx) => FavoriteBloc(
+            favoriteRepository: favoriteRepository,
+          ),
         ),
         BlocProvider(
-          create: (ctx) => ProfileBloc(profileRepository: profileRepository),
+          create: (ctx) => ProfileBloc(
+            profileRepository: profileRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (ctx) => FavBloc(
+            favRepository: favRepository,
+          ),
         ),
       ],
       child: RepositoryProvider.value(

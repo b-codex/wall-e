@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wall_e/auth/forgot_password/screens/forgot_password.dart';
+import 'package:wall_e/favorite/screens/fav_screen.dart';
+import 'package:wall_e/favorite/screens/fav_zoomed_image.dart';
 import 'package:wall_e/main_features/screens/home_page_screen.dart';
 import 'package:wall_e/main_features/screens/zoomed_image_screen.dart';
 import 'package:wall_e/auth/login/screens/login_screen.dart';
@@ -13,6 +15,8 @@ class RouteManager {
   static const String forgotPassword = '/forgotPassword';
   static const String zoomedImage = '/zoomedImage';
   static const String profilePage = "/profilePage";
+  static const String favoritesPage = '/favoritesPage';
+  static const String favZoomedImage = '/favZoomedImage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     late var values;
@@ -45,6 +49,16 @@ class RouteManager {
       case profilePage:
         return MaterialPageRoute(
           builder: (context) => ProfileScreen(),
+        );
+      case favoritesPage:
+        return MaterialPageRoute(
+          builder: (context) => FavoritesScreen(),
+        );
+      case favZoomedImage:
+        return MaterialPageRoute(
+          builder: (context) => FavZoomedImageScreen(
+            imageURL: values['imageURL'],
+          ),
         );
       default:
         throw FormatException('Route Not Found!');

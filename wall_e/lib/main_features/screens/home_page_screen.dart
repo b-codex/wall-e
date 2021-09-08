@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wall_e/auth/login/screens/login_screen.dart';
 import 'package:wall_e/main_features/blocs/blocs.dart';
 import 'package:wall_e/routes/routes.dart';
 
@@ -55,7 +56,7 @@ class HomePageScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(
-                  RouteManager.forgotPassword,
+                  RouteManager.favoritesPage,
                 );
               },
             ),
@@ -67,7 +68,15 @@ class HomePageScreen extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text('Logout'),
-                  onTap: () {},
+                  onTap: () {
+                    final logout = BlocProvider.of<HomePageBloc>(context);
+                    logout.add(LogoutUser());
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
