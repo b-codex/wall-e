@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/auth/forgot_password/blocs/blocs.dart';
 import 'package:wall_e/auth/forgot_password/models/fp_model.dart';
+import 'package:wall_e/auth/login/screens/login_screen.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -57,14 +58,21 @@ class ForgotPasswordScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   BlocConsumer<FP_Bloc, FP_State>(
                     listener: (context, state) {
-                      print(state);
                       if (state is ResetSuccess) {
-                        print("Password Reset Success");
-                        // Navigator.of(context).pushReplacement(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => LoginScreen(),
-                        //   ),
-                        // );
+                        final snackBar = SnackBar(
+                          content: Text(
+                            'Password Reset Successful',
+                            textAlign: TextAlign.center,
+                          ),
+                          backgroundColor: Colors.green,
+                          duration: Duration(seconds: 3),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
                       }
 
                       if (state is ResetFailure) {
@@ -81,7 +89,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                       }
                     },
                     builder: (context, state) {
-                      print(state);
                       if (state is ResetProgress) {
                         return LinearProgressIndicator();
                       }

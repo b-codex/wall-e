@@ -11,6 +11,8 @@ class ProfileLoadedState extends ProfileState {
       {required this.fullname, required this.username, required this.password});
 }
 
+class ProfileFailedToLoadState extends ProfileState {}
+
 class LoadingProfileState extends ProfileState {}
 
 class SavedProfileState extends ProfileState {}

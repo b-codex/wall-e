@@ -3,25 +3,33 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:wall_e/favorite/models/fav_model.dart';
 
 class FavDataProvider {
   Future<List> getFavoriteImages(String username) async {
     try {
-      var response =
-          await Dio().get('http://10.0.2.2:69/getFavorite?username=$username');
+      var response = await Dio(BaseOptions(
+        connectTimeout: 5 * 1000,
+      )).get('http://10.0.2.2:69/getFavorite?username=$username');
 
       if (response.data['status'] == '') {
-        return response.data['files'];
+        if (response.data['files'] != null) {
+          return response.data['files'];
+        }
+        return [];
       } else {
         return [];
       }
     } on DioError catch (_) {
-      return ['API Failure'];
+      return ['API Error'];
     }
   }
 
-  Future<String> deleteFavorite(String username, String imageURL) async {
+  Future<String> deleteFavorite(
+      RemoveFromFavoritesModel removeFromFavoritesModel) async {
     try {
+      String username = removeFromFavoritesModel.username;
+      String imageURL = removeFromFavoritesModel.imageURL;
       var response = await Dio().put(
           'http://10.0.2.2:69/deleteFavorite?username=$username&url=$imageURL');
       if (response.data['status'] == '') {
@@ -30,7 +38,7 @@ class FavDataProvider {
         return 'Failure';
       }
     } on DioError catch (_) {
-      return 'API Failure';
+      return 'API Error';
     }
   }
 

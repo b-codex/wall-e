@@ -74,7 +74,7 @@ class FavZoomedImageScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         bloc.add(
-                          DownloadImageEvent(imageUrl: imageURL),
+                          DownloadImage(imageUrl: imageURL),
                         );
                       },
                       child: Container(

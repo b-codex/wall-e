@@ -53,17 +53,9 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 50),
                   _buildFullname(_fullnameController),
-                  SizedBox(height: 10),
+                  SizedBox(height: 6),
                   _buildUsername(_usernameController),
-                  SizedBox(height: 5),
-                  Text(
-                    'Username Can\'t Be Changed After Registration',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.white38,
-                    ),
-                  ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 6),
                   _buildPassword(_passwordController),
                   SizedBox(height: 6),
                   _buildSecretKey(_secretKeyController),
@@ -79,7 +71,7 @@ class RegisterScreen extends StatelessWidget {
                   BlocConsumer<RegisterBloc, RegisterState>(
                     listener: (context, state) {
                       if (state is RegisterSuccess) {
-                        print('Registration Successful');
+                        
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => HomePageScreen(),
@@ -115,7 +107,6 @@ class RegisterScreen extends StatelessWidget {
                               password: _passwordController.text,
                               secretKey: _secretKeyController.text,
                             );
-                            print(user.fullname);
                             bloc.add(AttemptRegister(user: user));
                           }
                         },

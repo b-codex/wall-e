@@ -1,5 +1,9 @@
 abstract class LoginState {}
 
+class CheckStatus extends LoginState {}
+
+class CheckingStatus extends LoginState {}
+
 class LoggedOut extends LoginState {}
 
 class LoggedIn extends LoginState {}

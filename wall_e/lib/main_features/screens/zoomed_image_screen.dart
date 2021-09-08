@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wall_e/favorite/blocs/fav_bloc.dart';
+import 'package:wall_e/favorite/blocs/fav_event.dart';
 import 'package:wall_e/main_features/blocs/blocs.dart';
 import 'package:wall_e/main_features/blocs/fav_blocs.dart';
 import 'package:wall_e/sharedPreference.dart';
@@ -125,6 +127,8 @@ class ZoomedImageScreen extends StatelessWidget {
                         );
                         if (state is SavedAsFavorite) {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          final newBloc = BlocProvider.of<FavBloc>(context);
+                          newBloc.add(LoadingFavoriteImagesEvent());
                         }
                       },
                       builder: (context, state) {

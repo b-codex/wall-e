@@ -28,24 +28,6 @@ const userSchema = mongoose.Schema({
 })
 const User = mongoose.model('User', userSchema, "Users")
 
-app.get("/", function (req, res) {
-    log('home route')
-    res.send({
-        'status': 200
-    })
-})
-
-app.get('/getWallpapers', (req, res) => {
-    var files = [];
-    for (let index = 1; index <= 25; index++) {
-        files.push('Pictures/startPage/' + index + '.jpg')
-
-    }
-    res.send({
-        'files': files
-    })
-})
-
 app.get('/walls', (req, res) => {
     var start = req.query.start
     var end = req.query.end
@@ -54,8 +36,8 @@ app.get('/walls', (req, res) => {
 
     for (let index = start; index <= end; index++) {
         files.push('/Pictures/wallpapers/' + index + '.jpg')
-
     }
+
     res.send({
         'status': "",
         'files': files
@@ -99,7 +81,6 @@ app.post('/register', (req, res) => {
     }, (err, r) => {
         if (r) {
             if (r.username == newUser.username) {
-                // res.status(200)
                 res.json({
                     "status": "Failed"
                 })
@@ -115,7 +96,7 @@ app.post('/register', (req, res) => {
     })
 })
 
-app.post('/resetPassword', (req, res) => {
+app.put('/resetPassword', (req, res) => {
     username = req.query.username
     password = req.query.password
     secretKey = req.query.secretKey
@@ -125,7 +106,6 @@ app.post('/resetPassword', (req, res) => {
     }, (err, r) => {
         if (r) {
             if (r.username == username && r.secretKey == secretKey) {
-                log("Account Found")
                 db.collection('Users').findOneAndUpdate({
                     username: username
                 }, {
@@ -140,7 +120,6 @@ app.post('/resetPassword', (req, res) => {
                             'status': 'Operation Failed'
                         })
                     } else {
-                        log("Password Reset")
                         res.send({
                             'status': ''
                         })
@@ -155,22 +134,23 @@ app.post('/resetPassword', (req, res) => {
     })
 })
 
-app.post('/profile', (req, res) => {
+app.put('/profile', (req, res) => {
     fullname = req.query.fullname
     username = req.query.username
-    password = req.query.password
+    oldUsername = req.query.oldUsername
 
     db.collection('Users').findOneAndUpdate({
-        username: username
+        username: oldUsername
     }, {
         $set: {
             fullname: fullname,
-            password: password
+            username: username,
         }
     }, {
         new: true
     }, (err, r) => {
         if (r) {
+            log(r)
             res.send({
                 'status': ''
             })
@@ -198,7 +178,7 @@ app.get('/profile', (req, res) => {
     })
 })
 
-app.post('/addFavorite', (req, res) => {
+app.put('/addFavorite', (req, res) => {
     username = req.query.username
     imageUrl = req.query.url
 
@@ -255,7 +235,7 @@ app.get('/getFavorite', (req, res) => {
     }, (err, r) => {
         if (r) {
             res.send({
-                'status' : '',
+                'status': '',
                 'files': r.favorites
             })
         }

@@ -48,7 +48,6 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final _prefs = sharedPreference();
       _prefs.getUsername().then(
         (value) {
-          print('logged in user is ==> $value');
           _prefs.removeUsername();
         },
       );

@@ -7,13 +7,19 @@ class HomePageRepository {
 
   Future<List> LoadImages() async {
     final result = await homePageProvider.LoadImages();
-    
+
     return result;
   }
 
   Future<List> LoadMoreImages(LoadMoreImagesModel loadMoreImagesModel) async {
-    final result = await homePageProvider.LoadMoreImages(loadMoreImagesModel);
-    return result;
+    if (loadMoreImagesModel.start >= 200) {
+      LoadMoreImagesModel newModel = LoadMoreImagesModel(start: 1, end: 20);
+      final result = await homePageProvider.LoadMoreImages(newModel);
+      return result;
+    } else {
+      final result = await homePageProvider.LoadMoreImages(loadMoreImagesModel);
+      return result;
+    }
   }
 
   Future DownloadImage(String imageURL) async {

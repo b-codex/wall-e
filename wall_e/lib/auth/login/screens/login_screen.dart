@@ -4,7 +4,6 @@ import 'package:wall_e/main_features/screens/home_page_screen.dart';
 import 'package:wall_e/auth/login/blocs/blocs.dart';
 import 'package:wall_e/auth/login/models/login_model.dart';
 import 'package:wall_e/routes/routes.dart';
-import 'package:wall_e/sharedPreference.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = "/login";
@@ -17,141 +16,157 @@ class LoginScreen extends StatelessWidget {
 
     final _usernameController = TextEditingController();
     final _passwordController = TextEditingController();
-    final _prefs = sharedPreference();
-    _prefs.getUsername().then(
-      (value) {
-        print('logged in user is ==> $value');
-        
-      },
-    );
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(15),
-                    child: Center(
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 1.0,
-                          color: Colors.white38,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 50),
-                  _buildUsername(_usernameController),
-                  SizedBox(height: 10),
-                  _buildPassword(_passwordController),
-                  SizedBox(height: 6),
-                  BlocConsumer<LoginBloc, LoginState>(
-                    listener: (context, state) {
-                      if (state is LoggedIn) {
-                        Navigator.pushReplacement<void, void>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePageScreen(),
-                          ),
-                        );
-                        print("Successful Login");
-                      }
-                      if (state is LoginFailure) {
-                        final String message = state.message;
-                        final snackBar = SnackBar(
-                          content: Text(
-                            message,
-                            textAlign: TextAlign.center,
-                          ),
-                          backgroundColor: Colors.red,
-                          duration: Duration(seconds: 3),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is LoginProgress) {
-                        return LinearProgressIndicator();
-                      }
-
-                      return OutlinedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            final loginBloc =
-                                BlocProvider.of<LoginBloc>(context);
-
-                            final user = LoginUserModel(
-                              username: _usernameController.text,
-                              password: _passwordController.text,
-                            );
-                            loginBloc.add(AttemptLogin(user: user));
-                          }
-                        },
-                        child: Text('Login'),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Don\'t Have An Account?',
-                        style: TextStyle(fontSize: 12, fontFamily: 'Comfortaa'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(RouteManager.registerPage);
-                        },
-                        child: Text(
-                          'Register Now!',
-                          style: TextStyle(fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(RouteManager.forgotPassword);
-                        },
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+      body: BlocConsumer<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state is LoggedIn) {
+            Navigator.pushReplacement<void, void>(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePageScreen(),
               ),
-            ),
-          ),
-        ),
+            );
+          }
+          if (state is LoginFailure) {
+            final String message = state.message;
+            final snackBar = SnackBar(
+              content: Text(
+                message,
+                textAlign: TextAlign.center,
+              ),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 3),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
+        builder: (context, state) {
+          
+          final bloc = BlocProvider.of<LoginBloc>(context);
+
+          if (state is CheckStatus) {
+            bloc.add(CheckLoginStatus());
+          }
+
+          if (state is CheckingStatus) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state is LoggedOut) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 12),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: Center(
+                            child: Text(
+                              'Login',
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 1.0,
+                                color: Colors.white38,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                        _buildUsername(_usernameController),
+                        SizedBox(height: 10),
+                        _buildPassword(_passwordController),
+                        SizedBox(height: 6),
+                        BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context, state) {
+                            if (state is LoginProgress) {
+                              return LinearProgressIndicator();
+                            }
+                            return OutlinedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  final loginBloc =
+                                      BlocProvider.of<LoginBloc>(context);
+
+                                  final user = LoginUserModel(
+                                    username: _usernameController.text,
+                                    password: _passwordController.text,
+                                  );
+                                  loginBloc.add(AttemptLogin(user: user));
+                                }
+                              },
+                              child: Text('Login'),
+                            );
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Don\'t Have An Account?',
+                              style: TextStyle(
+                                  fontSize: 12, fontFamily: 'Comfortaa'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(RouteManager.registerPage);
+                              },
+                              child: Text(
+                                'Register Now!',
+                                style: TextStyle(fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            OutlinedButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(RouteManager.forgotPassword);
+                              },
+                              child: Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }

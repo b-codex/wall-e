@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wall_e/auth/login/blocs/blocs.dart';
 import 'package:wall_e/auth/login/screens/login_screen.dart';
 import 'package:wall_e/profile/blocs/blocs.dart';
-import 'package:wall_e/routes/routes.dart';
+import 'package:wall_e/sharedPreference.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -50,8 +51,27 @@ class ProfileScreen extends StatelessWidget {
         }
       },
       builder: (ctx, state) {
+        print(state);
         if (state is IdleProfileState) {
           bloc.add(LoadProfileEvent());
+        }
+
+        if (state is ProfileFailedToLoadState) {
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+            ),
+            body: Center(
+              child: Text(
+                'API Error',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 21,
+                ),
+              ),
+            ),
+          );
         }
 
         if (state is ProfileLoadedState) {
@@ -289,7 +309,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     BlocConsumer<ProfileBloc, ProfileState>(
-                      listener: (context, state) {
+                      listener: (context, state) async {
                         if (state is AccountDeleted) {
                           final snackBar = SnackBar(
                             content: Text(
@@ -299,6 +319,11 @@ class ProfileScreen extends StatelessWidget {
                             backgroundColor: Colors.green,
                             duration: Duration(seconds: 5),
                           );
+                          final checkLoginStatus =
+                              BlocProvider.of<LoginBloc>(context);
+                          final _prefs = sharedPreference();
+                          await _prefs.removeUsername();
+                          checkLoginStatus.add(CheckLoginStatus());
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => LoginScreen(),
@@ -323,7 +348,6 @@ class ProfileScreen extends StatelessWidget {
                                     actions: [
                                       TextButton(
                                         onPressed: () {
-                                          print("Delete");
                                           bloc.add(
                                             DeleteAccount(
                                               username:

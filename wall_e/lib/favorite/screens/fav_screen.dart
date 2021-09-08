@@ -12,12 +12,13 @@ class FavoritesScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        title: Text("Favorites"),
+        centerTitle: true,
       ),
       body: BlocBuilder<FavBloc, FavState>(
         builder: (context, state) {
           final bloc = BlocProvider.of<FavBloc>(context);
 
-          print(state);
           if (state is IdleState) {
             bloc.add(LoadingFavoriteImagesEvent());
           }

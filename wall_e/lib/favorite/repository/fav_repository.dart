@@ -1,4 +1,5 @@
 import 'package:wall_e/favorite/data_provider/data_provider.dart';
+import 'package:wall_e/favorite/models/fav_model.dart';
 
 class FavRepository {
   final FavDataProvider favDataProvider;
@@ -11,8 +12,8 @@ class FavRepository {
     return result;
   }
 
-  Future<String> deleteFavorite(String username, String imageURL) async {
-    var result = await favDataProvider.deleteFavorite(username, imageURL);
+  Future<String> deleteFavorite(RemoveFromFavoritesModel removeFromFavoritesModel) async {
+    var result = await favDataProvider.deleteFavorite(removeFromFavoritesModel);
 
     return result;
   }

@@ -1,4 +1,5 @@
 import 'package:wall_e/profile/data_provider/data_provider.dart';
+import 'package:wall_e/profile/models/profile_models.dart';
 
 class ProfileRepository {
   final ProfileDataProvider profileDataProvider;
@@ -10,6 +11,7 @@ class ProfileRepository {
         as Map<dynamic, dynamic>;
     if (result['status'] == 'Success') {
       return {
+        'status' : result['status'],
         'fullname': result['fullname'],
         'username': result['username'],
         'password': result['password'],
@@ -20,20 +22,15 @@ class ProfileRepository {
   }
 
   Future<String> savePersonalInfo(
-      String fullname, String username, String password) async {
-    var result = await profileDataProvider.savePersonalInfo(
-      fullname,
-      username,
-      password,
-    );
+      SavePersonalInfoModel savePersonalInfoModel) async {
+    var result =
+        await profileDataProvider.savePersonalInfo(savePersonalInfoModel);
 
     return result;
   }
 
-  Future<String> changePassword(
-      String username, String password, String secret_key) async {
-    var result = await profileDataProvider.changePassword(
-        username, password, secret_key);
+  Future<String> changePassword(ChangePasswordModel changePasswordModel) async {
+    var result = await profileDataProvider.changePassword(changePasswordModel);
 
     return result;
   }

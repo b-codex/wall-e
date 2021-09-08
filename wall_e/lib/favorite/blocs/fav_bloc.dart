@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/favorite/blocs/blocs.dart';
+import 'package:wall_e/favorite/models/fav_model.dart';
 import 'package:wall_e/favorite/repository/fav_repository.dart';
 import 'package:wall_e/sharedPreference.dart';
 
@@ -16,18 +17,18 @@ class FavBloc extends Bloc<FavEvent, FavState> {
 
     if (event is LoadingFavoriteImagesEvent) {
       var response = await favRepository.getFavoriteImages(username);
-
+      print(response);
       if (response.isEmpty) {
         yield LoadFailed(errorMessage: 'Loading Failed...');
       }
-      if (response == "API Failure") {
-        yield LoadFailed(errorMessage: 'API Failure');
+      if (response[0] == "API Error") {
+        yield LoadFailed(errorMessage: 'API Error');
       } else {
         yield LoadDone(images: response);
       }
     }
 
-    if (event is DownloadImageEvent) {
+    if (event is DownloadImage) {
       var response = await favRepository.DownloadImage(event.imageUrl);
       if (response == "Success") {
         yield DownloadImageDone();
@@ -38,15 +39,16 @@ class FavBloc extends Bloc<FavEvent, FavState> {
     }
 
     if (event is RemoveFromFavoritesEvent) {
-      var response =
-          await favRepository.deleteFavorite(username, event.imageURL);
+      var response = await favRepository.deleteFavorite(
+          RemoveFromFavoritesModel(
+              username: username, imageURL: event.imageURL));
 
       if (response == "Success") {
         yield RemovedFromFavorite();
         yield IdleState();
       }
       if (response == "Failure") {
-        print('failed to remove from fav');
+        yield IdleState();
       }
     }
   }

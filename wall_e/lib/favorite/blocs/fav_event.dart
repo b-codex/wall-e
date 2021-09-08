@@ -2,10 +2,10 @@ abstract class FavEvent {}
 
 class LoadingFavoriteImagesEvent extends FavEvent {}
 
-class DownloadImageEvent extends FavEvent {
+class DownloadImage extends FavEvent {
   final String imageUrl;
 
-  DownloadImageEvent({required this.imageUrl});
+  DownloadImage({required this.imageUrl});
 }
 
 class RemoveFromFavoritesEvent extends FavEvent {
