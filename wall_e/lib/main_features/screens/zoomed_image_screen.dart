@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/main_features/blocs/blocs.dart';
@@ -18,7 +17,35 @@ class ZoomedImageScreen extends StatelessWidget {
       _username = value;
     });
 
-    return BlocBuilder<HomePageBloc, HomePageState>(
+    return BlocConsumer<HomePageBloc, HomePageState>(
+      listener: (context, state) {
+        if (state is DownloadImageDone) {
+          final snackBar = SnackBar(
+            content: Text(
+              'Image Downloaded',
+              textAlign: TextAlign.center,
+            ),
+            duration: Duration(
+              seconds: 1,
+            ),
+            backgroundColor: Colors.green,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        if (state is DownloadImageFailed) {
+          final snackBar = SnackBar(
+            content: Text(
+              'Download Failed',
+              textAlign: TextAlign.center,
+            ),
+            duration: Duration(
+              seconds: 1,
+            ),
+            backgroundColor: Colors.red,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
       builder: (context, state) {
         final bloc = BlocProvider.of<HomePageBloc>(context);
 
@@ -43,68 +70,49 @@ class ZoomedImageScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white54, width: 1),
-                        borderRadius: BorderRadius.circular(30),
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0x36FFFFFF),
-                            Color(0x0FFFFFFF),
-                          ],
+                    // Download Button
+                    GestureDetector(
+                      onTap: () {
+                        bloc.add(
+                          DownloadImageEvent(imageUrl: imageURL),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 8),
+                        width: MediaQuery.of(context).size.width / 2,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white54, width: 1),
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0x36FFFFFF),
+                              Color(0x0FFFFFFF),
+                            ],
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              bloc.add(DownloadImageEvent(imageUrl: imageURL));
-
-                              if (state is DownloadImageDone) {
-                                final snackBar = SnackBar(
-                                  content: Text('Image Downloaded',
-                                      textAlign: TextAlign.center),
-                                  duration: Duration(
-                                    seconds: 1,
-                                  ),
-                                  backgroundColor: Colors.green,
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              } else {
-                                final snackBar = SnackBar(
-                                  content: Text('Download Failed',
-                                      textAlign: TextAlign.center),
-                                  duration: Duration(
-                                    seconds: 1,
-                                  ),
-                                  backgroundColor: Colors.red,
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              }
-                            },
-                            child: Text(
+                        child: Column(
+                          children: [
+                            Text(
                               'Download',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white70,
                               ),
                             ),
-                          ),
-                          Text(
-                            'Image Will Be Saved To Gallery',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white70,
+                            Text(
+                              'Image Will Be Saved To Gallery',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.white70,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
+                    // Favorite Button
                     BlocConsumer<FavoriteBloc, FavoriteState>(
                       listener: (context, state) {
                         final snackBar = SnackBar(

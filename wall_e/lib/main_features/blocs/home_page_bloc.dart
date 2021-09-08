@@ -10,15 +10,20 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   @override
   Stream<HomePageState> mapEventToState(HomePageEvent event) async* {
     if (event is LoadingEvent) {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1));
       final response = await homePageRepository.LoadImages();
-      yield LoadDone(images: response);
+
+      if (response.length == 0) {
+        yield LoadFailed(errorMessage: 'API Error');
+      } else {
+        yield LoadDone(images: response);
+      }
     }
 
     if (event is LoadMoreImages) {
       yield LoadingState();
 
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1));
       final response =
           await homePageRepository.LoadMoreImages(event.loadMoreImagesModel);
 
@@ -27,13 +32,14 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     if (event is DownloadImageEvent) {
       final response = await homePageRepository.DownloadImage(event.imageUrl);
-      if (response == 'Image Downloaded') {
+
+      if (response == 'Success') {
         yield DownloadImageDone();
-      } else {
+      }
+      if (response == 'Failure') {
+        print('failed');
         yield DownloadImageFailed();
       }
     }
-
-    if (event is AddImageToFavoriteEvent) {}
   }
 }

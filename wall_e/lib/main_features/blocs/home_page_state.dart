@@ -7,6 +7,12 @@ class LoadDone extends HomePageState {
   LoadDone({required this.images});
 }
 
+class LoadFailed extends HomePageState {
+  final String errorMessage;
+  
+  LoadFailed({required this.errorMessage});
+}
+
 class LoadMoreImagesDone extends HomePageState {
   final List images;
   LoadMoreImagesDone({required this.images});
@@ -15,5 +21,7 @@ class LoadMoreImagesDone extends HomePageState {
 class IdleState extends HomePageState {}
 
 class DownloadImageDone extends HomePageState {}
+
+class DownloadingImageState extends HomePageState {}
 
 class DownloadImageFailed extends HomePageState {}

@@ -19,10 +19,3 @@ class DownloadImageEvent extends HomePageEvent {
 
   DownloadImageEvent({required this.imageUrl});
 }
-
-class AddImageToFavoriteEvent extends HomePageEvent {
-  final String username;
-  final String imageUrl;
-
-  AddImageToFavoriteEvent({required this.username, required this.imageUrl});
-}

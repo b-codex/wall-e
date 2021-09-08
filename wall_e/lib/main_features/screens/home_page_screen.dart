@@ -80,12 +80,22 @@ class HomePageScreen extends StatelessWidget {
 
           final bloc = BlocProvider.of<HomePageBloc>(context);
 
+          print(state);
           if (state is IdleState) {
             bloc.add(LoadingEvent());
           }
 
-          if (state is LoadingState) {
-            return LinearProgressIndicator();
+          if (state is LoadFailed) {
+            final String errorMessage = state.errorMessage;
+            return Center(
+              child: Text(
+                errorMessage,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.red,
+                ),
+              ),
+            );
           }
 
           if (state is LoadDone) {
@@ -141,7 +151,9 @@ class HomePageScreen extends StatelessWidget {
               ),
             );
           }
-          return LinearProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );

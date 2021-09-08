@@ -7,6 +7,7 @@ class HomePageRepository {
 
   Future<List> LoadImages() async {
     final result = await homePageProvider.LoadImages();
+    
     return result;
   }
 
@@ -16,14 +17,13 @@ class HomePageRepository {
   }
 
   Future DownloadImage(String imageURL) async {
-    var result = await homePageProvider.DownloadImage(imageURL);
-    result as Map<dynamic, dynamic>;
+    var result =
+        await homePageProvider.DownloadImage(imageURL) as Map<dynamic, dynamic>;
 
     if (result['isSuccess']) {
-      return "Image Downloaded";
+      return "Success";
     } else {
-      return "Download Failed";
+      return "Failure";
     }
   }
-
 }
