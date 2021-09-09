@@ -7,15 +7,7 @@ class FP_Repository {
   FP_Repository({required this.fp_provider});
 
   Future<String> ResetPassword(FP_Model fp_model) async {
-    final String username = fp_model.username;
-    final String password = fp_model.password;
-    final String secretKey = fp_model.secretKey;
-
-    final result = await fp_provider.ResetPassword(
-      username,
-      password,
-      secretKey,
-    );
+    final result = await fp_provider.ResetPassword(fp_model);
     return result;
   }
 }

@@ -129,6 +129,10 @@ app.put('/resetPassword', (req, res) => {
                     'status': 'The Information You Entered Is Incorrect! Please Try Again!'
                 })
             }
+        } else {
+            res.send({
+                'status': 'Account Not Found'
+            })
         }
     })
 })

@@ -13,11 +13,18 @@ class FP_Bloc extends Bloc<FP_Event, FP_State> {
       yield ResetProgress();
       await Future.delayed(Duration(seconds: 2));
       final response = await fp_repository.ResetPassword(event.fp_model);
+
       if (response == "Failure") {
         yield ResetFailure(message: "Password Reset Failed.");
       }
       if (response == "Success") {
         yield ResetSuccess();
+      }
+      if (response == "Account Not Found") {
+        yield ResetFailure(message: response);
+      }
+      if (response == 'API Error') {
+        yield ResetFailure(message: response);
       }
     }
   }

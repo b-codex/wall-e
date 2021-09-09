@@ -17,14 +17,16 @@ class FavBloc extends Bloc<FavEvent, FavState> {
 
     if (event is LoadingFavoriteImagesEvent) {
       var response = await favRepository.getFavoriteImages(username);
-      print(response);
-      if (response.isEmpty) {
-        yield LoadFailed(errorMessage: 'Loading Failed...');
-      }
-      if (response[0] == "API Error") {
-        yield LoadFailed(errorMessage: 'API Error');
-      } else {
+      
+      if (response.length == 0) {
         yield LoadDone(images: response);
+      }
+      if (response.length != 0) {
+        if (response[0] == "API Error") {
+          yield LoadFailed(errorMessage: 'API Error');
+        } else {
+          yield LoadDone(images: response);
+        }
       }
     }
 

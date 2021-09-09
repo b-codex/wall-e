@@ -30,7 +30,7 @@ class FavoritesScreen extends StatelessWidget {
                 errorMessage,
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.red,
+                  // color: Colors.red,
                 ),
               ),
             );
@@ -38,6 +38,7 @@ class FavoritesScreen extends StatelessWidget {
 
           if (state is LoadDone) {
             List files = state.images;
+            
             if (files.length == 0) {
               return Center(
                 child: Text("No Favorites Yet..."),
