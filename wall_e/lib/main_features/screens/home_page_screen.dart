@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wall_e/auth/login/blocs/blocs.dart';
 import 'package:wall_e/auth/login/screens/login_screen.dart';
+import 'package:wall_e/favorite/blocs/blocs.dart';
+
 import 'package:wall_e/main_features/blocs/blocs.dart';
 import 'package:wall_e/main_features/models/home_page_models.dart';
 import 'package:wall_e/routes/routes.dart';
@@ -60,6 +62,8 @@ class HomePageScreen extends StatelessWidget {
               leading: Icon(Icons.star),
               title: Text('Favorites'),
               onTap: () {
+                final newBloc = BlocProvider.of<FavBloc>(context);
+                newBloc.add(IdleEvent());
                 Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(
                   RouteManager.favoritesPage,

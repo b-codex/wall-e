@@ -13,8 +13,7 @@ class FP_Provider {
         ),
       ).put(
           'http://10.0.2.2:69/resetPassword?username=$username&password=$password&secretKey=$secret_key');
-
-      print(response);
+          
       if (response.data['status'] == '') {
         return "Success";
       }

@@ -1,6 +1,8 @@
 abstract class FavEvent {}
 
-class LoadingFavoriteImagesEvent extends FavEvent {}
+class IdleEvent extends FavEvent {}
+
+class LoadFavoriteImagesEvent extends FavEvent {}
 
 class DownloadImage extends FavEvent {
   final String imageUrl;

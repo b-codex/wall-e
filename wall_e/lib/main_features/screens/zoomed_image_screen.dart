@@ -128,7 +128,7 @@ class ZoomedImageScreen extends StatelessWidget {
                         if (state is SavedAsFavorite) {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           final newBloc = BlocProvider.of<FavBloc>(context);
-                          newBloc.add(LoadingFavoriteImagesEvent());
+                          newBloc.add(LoadFavoriteImagesEvent());
                         }
                       },
                       builder: (context, state) {

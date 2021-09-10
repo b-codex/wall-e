@@ -7,7 +7,7 @@ import 'package:wall_e/sharedPreference.dart';
 class FavBloc extends Bloc<FavEvent, FavState> {
   final FavRepository favRepository;
 
-  FavBloc({required this.favRepository}) : super(IdleState());
+  FavBloc({required this.favRepository}) : super(InitialState());
 
   @override
   Stream<FavState> mapEventToState(FavEvent event) async* {
@@ -15,17 +15,28 @@ class FavBloc extends Bloc<FavEvent, FavState> {
     late String username;
     await _prefs.getUsername().then((value) => username = value);
 
-    if (event is LoadingFavoriteImagesEvent) {
+    if (event is IdleEvent) {
+      yield InitialState();
+    }
+
+    if (event is LoadFavoriteImagesEvent) {
+      print('event from bloc ========is========= $event');
+      await Future.delayed(Duration(seconds: 2));
+
       var response = await favRepository.getFavoriteImages(username);
-      
+      print(response);
+
       if (response.length == 0) {
-        yield LoadDone(images: response);
+        yield LoadDoneState(images: response);
       }
+
       if (response.length != 0) {
         if (response[0] == "API Error") {
-          yield LoadFailed(errorMessage: 'API Error');
+          yield LoadFailedState(errorMessage: 'API Error');
         } else {
-          yield LoadDone(images: response);
+          yield LoadDoneState(images: response);
+          // await Future.delayed(Duration(seconds: 5));
+          // yield InitialState();
         }
       }
     }
@@ -47,10 +58,10 @@ class FavBloc extends Bloc<FavEvent, FavState> {
 
       if (response == "Success") {
         yield RemovedFromFavorite();
-        yield IdleState();
+        yield InitialState();
       }
       if (response == "Failure") {
-        yield IdleState();
+        yield InitialState();
       }
     }
   }

@@ -14,16 +14,28 @@ class FavoritesScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text("Favorites"),
         centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            print('back clicked');
+            final newBloc = BlocProvider.of<FavBloc>(context);
+            newBloc.add(IdleEvent());
+
+            Navigator.of(context).pop();
+          },
+          child: Icon(Icons.arrow_back),
+        ),
       ),
       body: BlocBuilder<FavBloc, FavState>(
         builder: (context, state) {
+          print(state);
+
           final bloc = BlocProvider.of<FavBloc>(context);
+          bloc.add(LoadFavoriteImagesEvent());
+          // if (state is InitialState) {
+          // }
 
-          if (state is IdleState) {
-            bloc.add(LoadingFavoriteImagesEvent());
-          }
-
-          if (state is LoadFailed) {
+          if (state is LoadFailedState) {
             final String errorMessage = state.errorMessage;
             return Center(
               child: Text(
@@ -36,62 +48,65 @@ class FavoritesScreen extends StatelessWidget {
             );
           }
 
-          if (state is LoadDone) {
+          if (state is LoadDoneState) {
             List files = state.images;
-            
+
+            print('files from fav screen ========= $files');
+
             if (files.length == 0) {
               return Center(
                 child: Text("No Favorites Yet..."),
               );
-            }
-
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: GridView.count(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.6,
-                        mainAxisSpacing: 4.0,
-                        crossAxisSpacing: 4.0,
-                        children: files.map<Widget>(
-                          (file) {
-                            return GridTile(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    RouteManager.favZoomedImage,
-                                    arguments: {'imageURL': file},
-                                  );
-                                },
-                                child: Hero(
-                                  tag: file,
-                                  child: Container(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        file,
-                                        fit: BoxFit.fill,
+            } else {
+              return SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: GridView.count(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.6,
+                          mainAxisSpacing: 4.0,
+                          crossAxisSpacing: 4.0,
+                          children: files.map<Widget>(
+                            (file) {
+                              return GridTile(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      RouteManager.favZoomedImage,
+                                      arguments: {'imageURL': file},
+                                    );
+                                  },
+                                  child: Hero(
+                                    tag: file,
+                                    child: Container(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          file,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ).toList(),
+                              );
+                            },
+                          ).toList(),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
+
           return Center(
             child: CircularProgressIndicator(),
           );

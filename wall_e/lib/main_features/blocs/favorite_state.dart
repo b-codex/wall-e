@@ -1,5 +1,13 @@
-abstract class FavoriteState {}
+import 'package:equatable/equatable.dart';
 
-class SavedAsFavorite extends FavoriteState {}
+abstract class FavoriteState extends Equatable{}
 
-class NotFavorite extends FavoriteState {}
+class SavedAsFavorite extends FavoriteState {
+  @override
+  List<Object?> get props => [];
+}
+
+class NotFavorite extends FavoriteState {
+  @override
+  List<Object?> get props => [];
+}

@@ -51,7 +51,6 @@ class ProfileScreen extends StatelessWidget {
         }
       },
       builder: (ctx, state) {
-        print(state);
         if (state is IdleProfileState) {
           bloc.add(LoadProfileEvent());
         }

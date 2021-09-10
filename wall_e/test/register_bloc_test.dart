@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wall_e/auth/register/blocs/blocs.dart';
 import 'package:wall_e/auth/register/models/register_model.dart';
@@ -9,6 +10,11 @@ class MockRegisterRepository extends Mock implements RegisterRepository {}
 void main() {
   final MockRegisterRepository mockRegisterRepository =
       MockRegisterRepository();
+
+  test('initial state is RegisterIdle', () {
+    var currentState = RegisterBloc(registerRepository: mockRegisterRepository);
+    expect(RegisterIdle(), currentState.state);
+  });
 
   blocTest<RegisterBloc, RegisterState>(
     "should emit [RegisterProgress]",

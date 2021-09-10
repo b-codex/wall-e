@@ -1,26 +1,25 @@
 import 'package:equatable/equatable.dart';
-import 'package:wall_e/favorite/blocs/blocs.dart';
 
 abstract class FavState extends Equatable {}
 
-class IdleState extends FavState {
+class InitialState extends FavState {
   @override
   List<Object?> get props => [];
 }
 
-class LoadFailed extends FavState {
+class LoadFailedState extends FavState {
   final String errorMessage;
 
-  LoadFailed({required this.errorMessage});
+  LoadFailedState({required this.errorMessage});
 
   @override
   List<Object?> get props => [];
 }
 
-class LoadDone extends FavState {
+class LoadDoneState extends FavState {
   final List images;
 
-  LoadDone({required this.images});
+  LoadDoneState({required this.images});
 
   @override
   List<Object?> get props => [];
@@ -28,7 +27,7 @@ class LoadDone extends FavState {
 
 class DownloadImageDone extends FavState {
   @override
-  List<Object?> get props => [DownloadImageDone()];
+  List<Object?> get props => [];
 }
 
 class DownloadImageFailed extends FavState {
