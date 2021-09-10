@@ -55,7 +55,7 @@ npm start
 ## Profile Page
 <img src="UI/profile_page.png" width="350">
 <img src="UI/change_password.png" width="350">
-<img src="UI/delete_account.png" width="350">
+<img src="UI/delete_account_prompt.png" width="350">
 
 ## Zoomed Image
 <img src="UI/image_zoom_1.png" width="350">
