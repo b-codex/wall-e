@@ -19,7 +19,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       await _prefs.getUsername().then(
         (value) {
-          
           if (value != null) {
             status = true;
           }
@@ -41,8 +40,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final response = await loginRepository.LoginUser(event.user);
       if (response == "Failure") {
         yield LoginFailure(
-            message:
-                'Login Failed. Please Check Your Credentials & Try Again.');
+          message: 'Login Failed. Please Check Your Credentials & Try Again.',
+        );
         yield CheckStatus();
       }
       if (response == "Success") {

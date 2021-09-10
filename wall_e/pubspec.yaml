@@ -18,11 +18,17 @@ dependencies:
   flutter_launcher_icons: ^0.9.1
   image_gallery_saver: ^1.6.9
   flutter_bloc: ^7.1.0
+  equatable: ^2.0.3
   
 
 dev_dependencies:
+  bloc_test: ^8.1.0
+  build_runner: ^2.1.2
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.15
+  test: ^1.16.8
+  
 
 flutter:
   uses-material-design: true

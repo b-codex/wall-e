@@ -11,9 +11,10 @@ class FP_Bloc extends Bloc<FP_Event, FP_State> {
   Stream<FP_State> mapEventToState(FP_Event event) async* {
     if (event is AttemptReset) {
       yield ResetProgress();
-      await Future.delayed(Duration(seconds: 2));
-      final response = await fp_repository.ResetPassword(event.fp_model);
 
+      await Future.delayed(Duration(seconds: 2));
+      
+      final response = await fp_repository.ResetPassword(event.fp_model);
       if (response == "Failure") {
         yield ResetFailure(message: "Password Reset Failed.");
       }

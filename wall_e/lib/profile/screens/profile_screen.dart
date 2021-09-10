@@ -108,9 +108,11 @@ class ProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
+                      margin: EdgeInsets.symmetric(vertical: 25),
                       alignment: Alignment.center,
                       child: Image.asset(
-                        'assets/images/appIcon.png',
+                        'assets/images/profile_picture.png',
+                        width: 180,
                       ),
                     ),
                     Container(

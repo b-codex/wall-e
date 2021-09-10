@@ -38,36 +38,34 @@ After that type in the following command to start handing API calls from the fro
 npm start
 ```
 
-## Sample UIs For The Application
+## UIs For The Application
 
 ## Login Page
-<!-- ![](UI/login.png | width=350) -->
 <img src="UI/login.png" width="350">
 
 ## Register Page
-<!-- ![](UI/register.png | width=350) -->
 <img src="UI/register.png" width="350">
 
 ## Password Resetting Page
-<!-- ![](UI/forgot_password.png | width=350) -->
 <img src="UI/forgot_password.png" width="350">
 
 ## Homepage
-<!-- ![](UI/homepage.png | width=350) -->
 <img src="UI/homepage.png" width="350">
 
+## Profile Page
+<img src="UI/profile_page.png" width="350">
+<img src="UI/change_password.png" width="350">
+<img src="UI/delete_account.png" width="350">
+
 ## Zoomed Image
-<!-- ![](UI/image_zoom_1.png | width=350) -->
 <img src="UI/image_zoom_1.png" width="350">
-<!-- ![](UI/image_zoom_2.png | width=350) -->
 <img src="UI/image_zoom_2.png" width="350">
 
 ## Favorite Images Added
-<!-- ![](UI/adding_to_favorites.png | width=350) -->
 <img src="UI/adding_to_favorites.png" width="350">
 
 ## Favorites Page
-<!-- ![](UI/favorites_list.png | width=350) -->
+<img src="UI/no_favorites.png" width="350">
 <img src="UI/favorites_list.png" width="350">
 
 

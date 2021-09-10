@@ -1,12 +1,26 @@
-abstract class RegisterState {}
+import 'package:equatable/equatable.dart';
 
-class RegisterSuccess extends RegisterState {}
+abstract class RegisterState extends Equatable{}
 
-class RegisterProgress extends RegisterState {}
+class RegisterSuccess extends RegisterState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RegisterProgress extends RegisterState {
+  @override
+  List<Object?> get props => [];
+}
 
 class RegisterFailure extends RegisterState {
   final String message;
   RegisterFailure({required this.message});
+  
+  @override
+  List<Object?> get props => [];
 }
 
-class RegisterIdle extends RegisterState{}
+class RegisterIdle extends RegisterState{
+  @override
+  List<Object?> get props => [];
+}
