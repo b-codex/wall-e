@@ -20,11 +20,9 @@ class FavBloc extends Bloc<FavEvent, FavState> {
     }
 
     if (event is LoadFavoriteImagesEvent) {
-      print('event from bloc ========is========= $event');
       await Future.delayed(Duration(seconds: 2));
 
       var response = await favRepository.getFavoriteImages(username);
-      print(response);
 
       if (response.length == 0) {
         yield LoadDoneState(images: response);

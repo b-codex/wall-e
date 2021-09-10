@@ -17,7 +17,6 @@ class FavoritesScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         leading: GestureDetector(
           onTap: () {
-            print('back clicked');
             final newBloc = BlocProvider.of<FavBloc>(context);
             newBloc.add(IdleEvent());
 
@@ -28,12 +27,10 @@ class FavoritesScreen extends StatelessWidget {
       ),
       body: BlocBuilder<FavBloc, FavState>(
         builder: (context, state) {
-          print(state);
 
           final bloc = BlocProvider.of<FavBloc>(context);
           bloc.add(LoadFavoriteImagesEvent());
-          // if (state is InitialState) {
-          // }
+
 
           if (state is LoadFailedState) {
             final String errorMessage = state.errorMessage;
@@ -50,8 +47,6 @@ class FavoritesScreen extends StatelessWidget {
 
           if (state is LoadDoneState) {
             List files = state.images;
-
-            print('files from fav screen ========= $files');
 
             if (files.length == 0) {
               return Center(
