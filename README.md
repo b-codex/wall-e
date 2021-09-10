@@ -41,32 +41,32 @@ npm start
 ## UIs For The Application
 
 ## Login Page
-<img src="UI/login.png" width="350">
+<img src="UI/login.png" width="400">
 
 ## Register Page
-<img src="UI/register.png" width="350">
+<img src="UI/register_page.png" width="400">
 
 ## Password Resetting Page
-<img src="UI/forgot_password.png" width="350">
+<img src="UI/forgot_password.png" width="400">
 
 ## Homepage
-<img src="UI/homepage.png" width="350">
+<img src="UI/homepage.png" width="400">
 
 ## Profile Page
-<img src="UI/profile_page.png" width="350">
-<img src="UI/change_password.png" width="350">
-<img src="UI/delete_account_prompt.png" width="350">
+<img src="UI/profile_page.png" width="400">
+<img src="UI/change_password.png" width="400">
+<img src="UI/delete_account_prompt.png" width="400">
 
 ## Zoomed Image
-<img src="UI/image_zoom_1.png" width="350">
-<img src="UI/image_zoom_2.png" width="350">
+<img src="UI/image_zoom_1.png" width="400">
+<img src="UI/image_zoom_2.png" width="400">
 
 ## Favorite Images Added
-<img src="UI/adding_to_favorites.png" width="350">
+<img src="UI/adding_to_favorites.png" width="400">
 
 ## Favorites Page
-<img src="UI/no_favorites.png" width="350">
-<img src="UI/favorites_list.png" width="350">
+<img src="UI/no_favorites.png" width="400">
+<img src="UI/favorites_list.png" width="400">
 
 
 
