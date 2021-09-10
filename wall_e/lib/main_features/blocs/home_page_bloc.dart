@@ -35,11 +35,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final response = await homePageRepository.DownloadImage(event.imageUrl);
 
       if (response == 'Success') {
-        yield DownloadImageDone();
+        yield DownloadImageDoneState();
         yield IdleState();
       }
       if (response == 'Failure') {
-        yield DownloadImageFailed();
+        yield DownloadImageFailedState();
         yield IdleState();
       }
     }

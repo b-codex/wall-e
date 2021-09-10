@@ -21,7 +21,7 @@ class ZoomedImageScreen extends StatelessWidget {
 
     return BlocConsumer<HomePageBloc, HomePageState>(
       listener: (context, state) {
-        if (state is DownloadImageDone) {
+        if (state is DownloadImageDoneState) {
           final snackBar = SnackBar(
             content: Text(
               'Image Downloaded',
@@ -34,7 +34,7 @@ class ZoomedImageScreen extends StatelessWidget {
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        if (state is DownloadImageFailed) {
+        if (state is DownloadImageFailedState) {
           final snackBar = SnackBar(
             content: Text(
               'Download Failed',

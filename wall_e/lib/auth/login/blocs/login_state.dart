@@ -1,36 +1,21 @@
 import 'package:equatable/equatable.dart';
 
-abstract class LoginState extends Equatable {}
-
-class CheckStatus extends LoginState {
+abstract class LoginState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class CheckingStatus extends LoginState {
-  @override
-  List<Object?> get props => [];
-}
+class CheckStatus extends LoginState {}
 
-class LoggedOut extends LoginState {
-  @override
-  List<Object?> get props => [];
-}
+class CheckingStatus extends LoginState {}
 
-class LoggedIn extends LoginState {
-  @override
-  List<Object?> get props => [];
-}
+class LoggedOut extends LoginState {}
 
-class LoginProgress extends LoginState {
-  @override
-  List<Object?> get props => [];
-}
+class LoggedIn extends LoginState {}
+
+class LoginProgress extends LoginState {}
 
 class LoginFailure extends LoginState {
   final String message;
   LoginFailure({required this.message});
-
-  @override
-  List<Object?> get props => [this.message];
 }

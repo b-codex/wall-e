@@ -1,4 +1,9 @@
-abstract class FavEvent {}
+import 'package:equatable/equatable.dart';
+
+abstract class FavEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class IdleEvent extends FavEvent {}
 
