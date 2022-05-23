@@ -41,14 +41,14 @@ npm start
 ## UIs For The Application
 
 ## Auth Pages
-<img src="UI/login.png"> <img src="UI/register_page.png"> <img src="UI/forgot_password.png">
+<img src="UI/login.png" width="200"> <img src="UI/register_page.png" width="200"> <img src="UI/forgot_password.png" width="200">
 
 ## App Screens
-<img src="UI/homepage.png"> <img src="UI/profile_page.png"> <img src="UI/change_password.png"> <img src="UI/delete_account_prompt.png">
+<img src="UI/homepage.png" width="200"> <img src="UI/profile_page.png width="200""> <img src="UI/change_password.png" width="200"> <img src="UI/delete_account_prompt.png" width="200">
 
-<img src="UI/image_zoom_1.png"> <img src="UI/image_zoom_2.png"> <img src="UI/adding_to_favorites.png">
+<img src="UI/image_zoom_1.png" width="200"> <img src="UI/image_zoom_2.png" width="200"> <img src="UI/adding_to_favorites.png" width="200">
 
-<img src="UI/no_favorites.png"> <img src="UI/favorites_list.png">
+<img src="UI/no_favorites.png" width="200"> <img src="UI/favorites_list.png" width="200">
 
 
 
